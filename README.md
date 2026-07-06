@@ -1,5 +1,15 @@
-[README.md](https://github.com/user-attachments/files/29689295/README.md)
-[SportAnalyze_Blueprint.html](https://github.com/user-attachments/files/29689294/SportAnalyze_Blueprint.html)
-[index.html](https://github.com/user-attachments/files/29689293/index.html)
-# sportanalyze
-بسنج. تحلیل کن. پیشرفت کن
+# SportAnalyze — پلتفرم آنالیز عملکرد ورزشی
+
+Premium sports analytics platform for skiing and cycling (Persian, RTL).
+
+## Files
+
+- `index.html` — homepage (open directly in any browser)
+- `SportAnalyze_Blueprint.html` — full product design blueprint (12 sections: IA, feature matrix, user flows, wireframes, UI specs, roadmap)
+- `SportAnalyze_Design_System.md` — design tokens and system reference
+
+## Design system
+
+Primary `#18A8E5` · Navy `#0F172A` · Success `#16C784` · 8px spacing scale · Vazirmatn/Inter · WCAG AA
+
+**Track. Analyze. Improve.**

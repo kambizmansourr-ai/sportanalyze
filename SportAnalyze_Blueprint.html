@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SportAnalyze — نقشه کامل طراحی محصول</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#18A8E5; --primary-dark:#0D8BD8; --navy:#0F172A;
+  --success:#16C784; --warning:#F7B500; --danger:#F04438;
+  --hr:#F65B5B; --power:#8BC34A;
+  --bg:#F7F9FC; --surface:#FFFFFF; --border:#E5E7EB;
+  --text:#111827; --text-2:#6B7280;
+  --r-sm:8px; --r-md:12px; --r-lg:18px; --r-xl:24px; --r-pill:999px;
+  --sh-sm:0 2px 8px rgba(0,0,0,.06); --sh-md:0 8px 20px rgba(0,0,0,.08); --sh-lg:0 16px 40px rgba(0,0,0,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.75;font-size:16px}
+.container{max-width:1280px;margin:0 auto;padding:0 24px}
+a{color:var(--primary-dark);text-decoration:none}
+h1{font-size:40px;font-weight:800;line-height:1.3}
+h2{font-size:30px;font-weight:700;margin-bottom:8px}
+h3{font-size:22px;font-weight:600;margin:24px 0 12px}
+h4{font-size:17px;font-weight:600;margin:16px 0 8px}
+p{color:var(--text-2)}
+code,pre{font-family:'SFMono-Regular',Consolas,monospace;direction:ltr;text-align:left}
+
+/* ===== Hero ===== */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#1E3A5F 60%,var(--primary-dark) 100%);color:#fff;padding:72px 0 56px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;inset-inline-start:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:rgba(24,168,229,.15)}
+.hero .container{position:relative;z-index:1}
+.hero .badge{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:var(--r-pill);padding:4px 16px;font-size:13px;margin-bottom:16px}
+.hero p{color:rgba(255,255,255,.75);max-width:640px;margin-top:12px;font-size:17px}
+.hero .meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.hero .meta span{background:rgba(255,255,255,.1);border-radius:var(--r-md);padding:8px 16px;font-size:13px}
+
+/* ===== Nav ===== */
+.toc{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:50}
+.toc-inner{display:flex;gap:4px;overflow-x:auto;padding:10px 24px;max-width:1280px;margin:0 auto;scrollbar-width:none}
+.toc-inner::-webkit-scrollbar{display:none}
+.toc a{white-space:nowrap;padding:8px 14px;border-radius:var(--r-pill);font-size:13.5px;font-weight:500;color:var(--text-2);transition:all .2s ease-out;min-height:36px;display:inline-flex;align-items:center}
+.toc a:hover,.toc a:focus-visible{background:#E8F6FD;color:var(--primary-dark)}
+.toc a:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+
+/* ===== Sections ===== */
+section{padding:56px 0;border-bottom:1px solid var(--border)}
+.sec-num{display:inline-flex;align-items:center;gap:10px;margin-bottom:4px}
+.sec-num b{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--r-md);background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;font-size:17px;box-shadow:var(--sh-sm)}
+.sec-num small{color:var(--text-2);font-size:13px;letter-spacing:.5px}
+.lead{max-width:760px;margin-bottom:24px}
+
+/* ===== Cards & grids ===== */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;box-shadow:var(--sh-sm);transition:transform .2s ease-out,box-shadow .2s ease-out}
+.card:hover{transform:scale(1.02);box-shadow:var(--sh-md)}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+
+/* ===== Tables ===== */
+.tbl{width:100%;border-collapse:collapse;background:var(--surface);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-sm);font-size:14px}
+.tbl th{background:var(--navy);color:#fff;padding:12px 16px;text-align:right;font-weight:600;white-space:nowrap}
+.tbl td{padding:11px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:nth-child(even){background:#FAFCFE}
+.tbl-wrap{overflow-x:auto;border-radius:var(--r-lg)}
+
+/* ===== Chips / badges ===== */
+.chip{display:inline-block;border-radius:var(--r-pill);padding:2px 12px;font-size:12px;font-weight:600;white-space:nowrap}
+.c-free{background:#E8F9F1;color:#0E9F68}
+.c-paid{background:#E8F6FD;color:var(--primary-dark)}
+.c-vip{background:#FDF3DC;color:#B58400}
+.c-mvp{background:#E8F6FD;color:var(--primary-dark)}
+.c-p2{background:#F3F4F6;color:var(--text-2)}
+.c-p3{background:#FBEAE8;color:#C23328}
+.c-nav{background:#EEF2FF;color:#4F46E5}
+
+/* ===== Tree (IA / sitemap) ===== */
+.tree{list-style:none;position:relative}
+.tree ul{list-style:none;padding-inline-start:28px;position:relative}
+.tree ul::before{content:'';position:absolute;inset-inline-start:10px;top:0;bottom:12px;border-inline-start:2px solid var(--border)}
+.tree li{position:relative;margin:6px 0}
+.tree ul li::before{content:'';position:absolute;inset-inline-start:-18px;top:14px;width:14px;border-top:2px solid var(--border)}
+.node{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:6px 14px;font-size:14px;font-weight:500;box-shadow:var(--sh-sm)}
+.node.root{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:700}
+.node.hub{background:#E8F6FD;border-color:#BEE4F8;color:var(--primary-dark);font-weight:600}
+.node small{color:var(--text-2);font-weight:400;font-size:12px}
+.node.hub small{color:#4C9CC4}
+
+/* ===== Flow steps ===== */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0 4px}
+.step{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:10px 14px;font-size:13.5px;font-weight:500;box-shadow:var(--sh-sm);max-width:200px}
+.step b{display:block;font-size:11px;color:var(--primary-dark);font-weight:700;margin-bottom:2px}
+.step.decision{background:#FDF6E3;border-color:#F5E2AC}
+.step.end{background:#E8F9F1;border-color:#B8ECD4}
+.arr{color:var(--primary);font-weight:700;font-size:18px;transform:scaleX(-1)}
+
+/* ===== Phone wireframes ===== */
+.phones{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;margin-top:20px}
+.phone{background:var(--navy);border-radius:32px;padding:10px;box-shadow:var(--sh-lg);max-width:290px;margin:0 auto}
+.phone .screen{background:var(--bg);border-radius:24px;overflow:hidden;font-size:9.5px;height:540px;display:flex;flex-direction:column}
+.phone .label{text-align:center;color:#fff;font-size:12.5px;font-weight:600;padding:10px 0 4px}
+.wf-body{flex:1;overflow:hidden;display:flex;flex-direction:column}
+.wf-head{background:var(--surface);padding:7px 10px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);font-weight:700;font-size:10px}
+.wf-hero{background:linear-gradient(135deg,var(--navy),var(--primary-dark));color:#fff;padding:14px 12px}
+.wf-hero h5{font-size:12px;margin-bottom:3px}
+.wf-hero p{color:rgba(255,255,255,.75);font-size:8.5px;margin-bottom:8px}
+.wf-btn{display:inline-block;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border-radius:8px;padding:5px 12px;font-size:9px;font-weight:700}
+.wf-btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.5)}
+.wf-btn.success{background:var(--success)}
+.wf-kpis{display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border-bottom:1px solid var(--border)}
+.wf-kpis div{padding:7px 2px;text-align:center;border-inline-start:1px solid var(--border)}
+.wf-kpis div:first-child{border-inline-start:none}
+.wf-kpis b{display:block;font-size:10.5px;color:var(--text)}
+.wf-kpis span{font-size:7.5px;color:var(--text-2)}
+.wf-sec{padding:9px 10px}
+.wf-sec h6{font-size:10px;margin-bottom:6px;color:var(--text)}
+.wf-cards{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.wf-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:7px;box-shadow:var(--sh-sm)}
+.wf-card b{display:block;font-size:8.5px;margin-bottom:1px}
+.wf-card span{font-size:7.5px;color:var(--text-2);line-height:1.4;display:block}
+.wf-thumb{height:34px;border-radius:6px;background:linear-gradient(135deg,#D6EDF9,#B8DFF5);margin-bottom:5px;display:flex;align-items:center;justify-content:center;color:var(--primary-dark);font-size:11px}
+.wf-video{background:linear-gradient(135deg,#20364F,#0D8BD8);border-radius:10px;height:74px;display:flex;align-items:center;justify-content:center;margin:0 10px}
+.wf-play{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;color:var(--primary-dark);font-size:10px}
+.wf-nav{margin-top:auto;background:var(--surface);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(5,1fr);padding:6px 0 8px;text-align:center;font-size:7.5px;color:var(--text-2)}
+.wf-nav b{display:block;font-size:11px}
+.wf-nav .on{color:var(--primary-dark);font-weight:700}
+.wf-list{display:flex;flex-direction:column;gap:6px;padding:0 10px}
+.wf-row{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:7px 9px;display:flex;justify-content:space-between;align-items:center}
+.wf-row b{font-size:8.5px}
+.wf-row span{font-size:7.5px;color:var(--text-2);display:block}
+.wf-ring{width:44px;height:44px;border-radius:50%;background:conic-gradient(var(--success) 0 78%,var(--border) 78% 100%);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.wf-ring i{background:var(--surface);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:8px;font-weight:700}
+.wf-bar{height:5px;border-radius:99px;background:var(--border);overflow:hidden;margin-top:4px}
+.wf-bar i{display:block;height:100%;border-radius:99px}
+.wf-tag{display:inline-block;border-radius:99px;padding:1px 7px;font-size:7px;font-weight:700}
+
+/* ===== Tokens ===== */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.sw{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--sh-sm);font-size:12.5px}
+.sw .c{height:56px}
+.sw .i{padding:8px 12px}
+.sw b{display:block;font-size:13px}
+.sw code{font-size:11px;color:var(--text-2)}
+.typo-row{display:flex;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1px dashed var(--border)}
+.typo-row:last-child{border:none}
+.typo-row .demo{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.typo-row .spec{font-size:12px;color:var(--text-2);white-space:nowrap}
+pre.code{background:var(--navy);color:#D9E6F2;border-radius:var(--r-lg);padding:20px 24px;font-size:12.5px;line-height:1.7;overflow-x:auto;box-shadow:var(--sh-md)}
+pre.code .k{color:#7DD3FC}.code .s{color:#86EFAC}.code .c{color:#64748B}
+
+/* ===== Dashboard mock ===== */
+.dash{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);box-shadow:var(--sh-md);overflow:hidden;font-size:11px}
+.dash-top{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--border);font-weight:700;font-size:12px}
+.dash-grid{display:grid;grid-template-columns:170px 1fr;min-height:360px}
+.dash-side{background:#F0F6FB;border-inline-end:1px solid var(--border);padding:12px 10px;display:flex;flex-direction:column;gap:4px}
+.dash-side a{border-radius:8px;padding:7px 10px;color:var(--text-2);font-size:11px}
+.dash-side a.on{background:var(--surface);color:var(--primary-dark);font-weight:700;box-shadow:var(--sh-sm)}
+.dash-main{padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
+.dash-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dk{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:9px 11px;box-shadow:var(--sh-sm)}
+.dk b{font-size:15px;display:block}
+.dk span{font-size:9px;color:var(--text-2)}
+.dk .up{color:var(--success);font-size:9px;font-weight:700}
+.dash-row{display:grid;grid-template-columns:2fr 1fr;gap:8px}
+.dp{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 12px;box-shadow:var(--sh-sm)}
+.dp h6{font-size:10.5px;margin-bottom:6px}
+.spark{display:flex;align-items:flex-end;gap:3px;height:64px}
+.spark i{flex:1;border-radius:3px 3px 0 0;background:linear-gradient(180deg,var(--primary),var(--primary-dark))}
+.ai-item{display:flex;gap:6px;font-size:9.5px;color:var(--text-2);padding:4px 0;border-bottom:1px dashed var(--border)}
+.ai-item:last-child{border:none}
+.ai-dot{width:6px;height:6px;border-radius:50%;background:var(--success);margin-top:6px;flex-shrink:0}
+
+/* ===== Roadmap ===== */
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.phase{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:hidden}
+.phase header{padding:12px 18px;color:#fff;font-weight:700;font-size:15px}
+.phase ul{list-style:none;padding:14px 18px;font-size:13.5px;color:var(--text-2)}
+.phase li{padding:5px 0;padding-inline-start:18px;position:relative}
+.phase li::before{content:'✓';position:absolute;inset-inline-start:0;color:var(--success);font-weight:700}
+.phase .dur{font-size:11.5px;opacity:.85;font-weight:400}
+
+footer{padding:40px 0;text-align:center;color:var(--text-2);font-size:13.5px}
+@media(max-width:760px){
+  h1{font-size:30px}h2{font-size:24px}
+  .dash-grid{grid-template-columns:1fr}
+  .dash-side{flex-direction:row;overflow-x:auto;border-inline-end:none;border-bottom:1px solid var(--border)}
+  .dash-row{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="container">
+    <span class="badge">نسخهٔ ۱.۰ — سند مرجع طراحی و توسعه</span>
+    <h1>SportAnalyze<br>نقشهٔ کامل طراحی محصول</h1>
+    <p>پلتفرم پریمیوم آنالیز عملکرد ورزشی برای اسکی و دوچرخه‌سواری — آنالیز ویدیویی حرکات، رزرو کلاس، تمرین‌های هوشمند و باشگاه مشتریان. این سند شامل ۱۲ بخش از معماری اطلاعات تا نقشهٔ راه توسعه است.</p>
+    <div class="meta">
+      <span>🎯 دامنه: وب‌سایت بازاریابی + اپ ورزشکار</span>
+      <span>🌐 زبان: فارسی (RTL-first)</span>
+      <span>⚙️ استک: Next.js + Tailwind + shadcn/ui</span>
+      <span>♿ استاندارد: WCAG AA</span>
+    </div>
+  </div>
+</div>
+
+<nav class="toc" aria-label="فهرست بخش‌ها">
+  <div class="toc-inner">
+    <a href="#ia">۱· معماری اطلاعات</a>
+    <a href="#features">۲· ماتریس قابلیت‌ها</a>
+    <a href="#flows">۳· جریان‌های کاربری</a>
+    <a href="#sitemap">۴· نقشهٔ سایت</a>
+    <a href="#screens">۵· فهرست صفحات</a>
+    <a href="#components">۶· کامپوننت‌ها</a>
+    <a href="#dashboard">۷· معماری داشبورد</a>
+    <a href="#wireframes">۸· وایرفریم موبایل</a>
+    <a href="#specs">۹· مشخصات UI</a>
+    <a href="#frontend">۱۰· معماری فرانت‌اند</a>
+    <a href="#d2c">۱۱· طراحی تا کد</a>
+    <a href="#roadmap">۱۲· نقشهٔ راه</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<!-- ================= 1. IA ================= -->
+<section id="ia">
+  <div class="sec-num"><b>۱</b><small>INFORMATION ARCHITECTURE</small></div>
+  <h2>معماری اطلاعات</h2>
+  <p class="lead">دو سطح مجزا با یک زبان طراحی واحد: <strong>وب‌سایت بازاریابی</strong> برای جذب و تبدیل، و <strong>اپ ورزشکار</strong> برای استفادهٔ روزانه. مرز بین این دو، احراز هویت است.</p>
+  <div class="card" style="overflow-x:auto">
+    <ul class="tree">
+      <li><span class="node root">SportAnalyze</span>
+        <ul>
+          <li><span class="node hub">🌐 وب‌سایت بازاریابی <small>(عمومی)</small></span>
+            <ul>
+              <li><span class="node">خانه <small>هیرو + KPI + قابلیت‌ها + CTA</small></span></li>
+              <li><span class="node">قابلیت‌ها <small>اسکی / دوچرخه / آنالیز ویدیویی</small></span></li>
+              <li><span class="node">باشگاه مشتریان <small>پلن‌ها: رایگان، پولی، اشتراک سالیانه، VIP</small></span></li>
+              <li><span class="node">ویدیوهای آموزشی <small>اتصال به آپارات و یوتیوب</small></span></li>
+              <li><span class="node">دربارهٔ ما / تماس</span></li>
+              <li><span class="node">ورود / ثبت‌نام</span></li>
+            </ul>
+          </li>
+          <li><span class="node hub">📱 اپ ورزشکار <small>(نیازمند ورود)</small></span>
+            <ul>
+              <li><span class="node">داشبورد <small>KPI ها، روند عملکرد، بینش‌های AI</small></span></li>
+              <li><span class="node">آنالیز من <small>آپلود ویدیو → صف بررسی → نتیجه</small></span>
+                <ul>
+                  <li><span class="node">آنالیز حرکتی اسکی</span></li>
+                  <li><span class="node">آنالیز دوچرخه</span></li>
+                  <li><span class="node">راهنمای زاویهٔ فیلم‌برداری</span></li>
+                </ul>
+              </li>
+              <li><span class="node">تمرین <small>برنامهٔ تمرین دوچرخه + پیشرفت</small></span></li>
+              <li><span class="node">رزرو کلاس <small>کلاس اسکی، تقویم، جلسهٔ رایگان VIP</small></span></li>
+              <li><span class="node">ویدیوها <small>کتابخانهٔ آموزشی اسکی و دوچرخه</small></span></li>
+              <li><span class="node">پروفایل <small>اشتراک، پرداخت‌ها، اعلان‌های ایمیلی، تنظیمات</small></span></li>
+            </ul>
+          </li>
+          <li><span class="node hub">🛒 فروشگاه لوازم <small>(فاز آینده — دست اول و دوم)</small></span></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><h4>اصل ۱ — عمق کم</h4><p style="font-size:14px">هیچ محتوایی بیش از ۳ سطح از خانه فاصله ندارد؛ ناوبری پایینی اپ ۵ مقصد اصلی دارد.</p></div>
+    <div class="card"><h4>اصل ۲ — یک CTA اصلی</h4><p style="font-size:14px">هر صفحه فقط یک اقدام اصلی دارد: در سایت «شروع کنید»، در اپ «آپلود ویدیو».</p></div>
+    <div class="card"><h4>اصل ۳ — افشای تدریجی</h4><p style="font-size:14px">جزئیات آنالیز، قیمت‌ها و تنظیمات فقط در لحظهٔ نیاز نمایش داده می‌شوند.</p></div>
+  </div>
+</section>
+
+<!-- ================= 2. Feature Matrix ================= -->
+<section id="features">
+  <div class="sec-num"><b>۲</b><small>FEATURE MATRIX</small></div>
+  <h2>ماتریس قابلیت‌ها</h2>
+  <p class="lead">تمام قابلیت‌های تعریف‌شده در محصول، سطح دسترسی و اولویت ساخت. مدل درآمدی: فریمیوم + اشتراک سالیانه + جلسات VIP.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>قابلیت</th><th>شرح</th><th>دسترسی</th><th>سطح</th><th>اولویت</th></tr></thead>
+    <tbody>
+      <tr><td><strong>آنالیز حرکتی اسکی</strong></td><td>آپلود ویدیو، بررسی تکنیک توسط مربی + ابزار مقایسهٔ فریم‌به‌فریم</td><td>ورزشکار</td><td><span class="chip c-free">رایگان (پایه)</span> <span class="chip c-paid">پولی (کامل)</span></td><td><span class="chip c-mvp">MVP</span></td></tr>
+      <tr><td><strong>آنالیز دوچرخه</strong></td><td>تحلیل قدرت، کدنس، ضربان قلب و پوزیشن بدن</td><td>ورزشکار</td><td><span class="chip c-free">رایگان (پایه)</span> <span class="chip c-paid">پولی (کامل)</span></td><td><span class="chip c-mvp">MVP</span></td></tr>
+      <tr><td><strong>راهنمای زاویهٔ فیلم‌برداری</strong></td><td>آموزش تصویری تعاملی قبل از آپلود: زاویه، فاصله و نور صحیح</td><td>ورزشکار</td><td><span class="chip c-free">رایگان</span></td><td><span class="chip c-mvp">MVP</span></td></tr>
+      <tr><td><strong>رزرو کلاس اسکی</strong></td><td>تقویم مربی، انتخاب سانس، پرداخت و تأیید ایمیلی</td><td>ورزشکار</td><td><span class="chip c-paid">پولی</span></td><td><span class="chip c-mvp">MVP</span></td></tr>
+      <tr><td><strong>تمرین دوچرخه</strong></td><td>برنامهٔ تمرینی هفتگی + ثبت جلسات و روند پیشرفت</td><td>ورزشکار</td><td><span class="chip c-paid">اشتراکی</span></td><td><span class="chip c-p2">فاز ۲</span></td></tr>
+      <tr><td><strong>فیلم‌های آموزشی</strong></td><td>کتابخانهٔ ویدیویی اسکی و دوچرخه با پخش از آپارات و یوتیوب</td><td>همه</td><td><span class="chip c-free">رایگان</span></td><td><span class="chip c-mvp">MVP</span></td></tr>
+      <tr><td><strong>باشگاه مشتریان</strong></td><td>اشتراک سالیانه با آنالیز نامحدود + مزایای وفاداری</td><td>ورزشکار</td><td><span class="chip c-paid">اشتراک سالیانه</span></td><td><span class="chip c-mvp">MVP</span></td></tr>
+      <tr><td><strong>جلسهٔ رایگان VIP</strong></td><td>یک جلسه آنالیز/مشاورهٔ رایگان برای اعضای VIP</td><td>VIP</td><td><span class="chip c-vip">VIP</span></td><td><span class="chip c-p2">فاز ۲</span></td></tr>
+      <tr><td><strong>اعلان ایمیلی</strong></td><td>«ایمیل اومده!» — اطلاع‌رسانی آماده‌شدن آنالیز، تأیید رزرو و تمدید اشتراک</td><td>سیستم</td><td><span class="chip c-free">همه</span></td><td><span class="chip c-mvp">MVP</span></td></tr>
+      <tr><td><strong>فروش لوازم (نو و دست‌دوم)</strong></td><td>مارکت‌پلیس تجهیزات اسکی و دوچرخه</td><td>همه</td><td><span class="chip c-paid">کمیسیونی</span></td><td><span class="chip c-p3">فاز ۳</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ================= 3. User Flows ================= -->
+<section id="flows">
+  <div class="sec-num"><b>۳</b><small>USER FLOWS</small></div>
+  <h2>جریان‌های کاربری</h2>
+  <p class="lead">چهار جریان حیاتی محصول. هر مرحله یک صفحه یا حالت مشخص است؛ مراحل زرد نقطهٔ تصمیم و مراحل سبز پایان موفق جریان‌اند.</p>
+
+  <div class="card">
+    <h4>🎿 جریان ۱ — دریافت آنالیز حرکتی (جریان طلایی)</h4>
+    <div class="flow">
+      <span class="step"><b>۰۱</b>ورود از هیرو سایت «شروع کنید»</span><span class="arr">←</span>
+      <span class="step"><b>۰۲</b>ثبت‌نام سریع (ایمیل/موبایل)</span><span class="arr">←</span>
+      <span class="step"><b>۰۳</b>انتخاب رشته: اسکی یا دوچرخه</span><span class="arr">←</span>
+      <span class="step"><b>۰۴</b>راهنمای زاویهٔ فیلم‌برداری</span><span class="arr">←</span>
+      <span class="step"><b>۰۵</b>آپلود ویدیو + توضیحات</span><span class="arr">←</span>
+      <span class="step decision"><b>تصمیم</b>رایگان (پایه) یا پولی (کامل)؟</span><span class="arr">←</span>
+      <span class="step"><b>۰۶</b>پرداخت / تأیید</span><span class="arr">←</span>
+      <span class="step"><b>۰۷</b>وضعیت: در صف بررسی</span><span class="arr">←</span>
+      <span class="step"><b>۰۸</b>اعلان ایمیلی «آنالیز آماده است»</span><span class="arr">←</span>
+      <span class="step end"><b>پایان</b>مشاهدهٔ نتیجه + CTA اشتراک سالیانه</span>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h4>⛷ جریان ۲ — رزرو کلاس اسکی</h4>
+    <div class="flow">
+      <span class="step"><b>۰۱</b>تب «رزرو کلاس»</span><span class="arr">←</span>
+      <span class="step"><b>۰۲</b>انتخاب مربی / سطح</span><span class="arr">←</span>
+      <span class="step"><b>۰۳</b>تقویم و سانس خالی</span><span class="arr">←</span>
+      <span class="step decision"><b>تصمیم</b>VIP؟ جلسهٔ اول رایگان</span><span class="arr">←</span>
+      <span class="step"><b>۰۴</b>پرداخت</span><span class="arr">←</span>
+      <span class="step end"><b>پایان</b>تأیید + ایمیل + افزودن به تقویم</span>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h4>⭐ جریان ۳ — عضویت در باشگاه مشتریان</h4>
+    <div class="flow">
+      <span class="step"><b>۰۱</b>بنر «آنالیز نامحدود» در نتیجهٔ آنالیز یا صفحهٔ قیمت</span><span class="arr">←</span>
+      <span class="step"><b>۰۲</b>مقایسهٔ پلن‌ها (رایگان / تکی / سالیانه)</span><span class="arr">←</span>
+      <span class="step"><b>۰۳</b>پرداخت اشتراک سالیانه</span><span class="arr">←</span>
+      <span class="step end"><b>پایان</b>نشان عضویت + آنالیز نامحدود فعال</span>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h4>🚴 جریان ۴ — تمرین دوچرخه (فاز ۲)</h4>
+    <div class="flow">
+      <span class="step"><b>۰۱</b>تب «تمرین»</span><span class="arr">←</span>
+      <span class="step"><b>۰۲</b>هدف‌گذاری (مسافت/قدرت)</span><span class="arr">←</span>
+      <span class="step"><b>۰۳</b>برنامهٔ هفتگی پیشنهادی</span><span class="arr">←</span>
+      <span class="step"><b>۰۴</b>ثبت جلسهٔ تمرین</span><span class="arr">←</span>
+      <span class="step end"><b>پایان</b>به‌روزرسانی حلقهٔ پیشرفت و رکوردها</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4. Sitemap ================= -->
+<section id="sitemap">
+  <div class="sec-num"><b>۴</b><small>SITEMAP</small></div>
+  <h2>نقشهٔ سایت</h2>
+  <p class="lead">آدرس‌دهی URL محور برای دیپ‌لینک، سئو و اشتراک‌گذاری. تمام صفحات کلیدی از طریق URL مستقیم در دسترس‌اند.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>مسیر (Route)</th><th>صفحه</th><th>دسترسی</th><th>هدف اصلی</th></tr></thead>
+    <tbody>
+      <tr><td><code>/</code></td><td>خانه</td><td><span class="chip c-free">عمومی</span></td><td>تبدیل بازدیدکننده → ثبت‌نام</td></tr>
+      <tr><td><code>/features</code></td><td>قابلیت‌ها</td><td><span class="chip c-free">عمومی</span></td><td>معرفی آنالیز اسکی و دوچرخه</td></tr>
+      <tr><td><code>/pricing</code></td><td>باشگاه مشتریان و قیمت‌ها</td><td><span class="chip c-free">عمومی</span></td><td>فروش اشتراک سالیانه</td></tr>
+      <tr><td><code>/videos</code></td><td>ویدیوهای آموزشی</td><td><span class="chip c-free">عمومی</span></td><td>جذب ارگانیک + اعتمادسازی</td></tr>
+      <tr><td><code>/auth/login · /auth/register</code></td><td>ورود / ثبت‌نام</td><td><span class="chip c-free">عمومی</span></td><td>احراز هویت با کمترین اصطکاک</td></tr>
+      <tr><td><code>/app</code></td><td>داشبورد</td><td><span class="chip c-paid">ورود</span></td><td>مرور KPI و بینش‌ها</td></tr>
+      <tr><td><code>/app/analysis</code></td><td>آنالیزهای من</td><td><span class="chip c-paid">ورود</span></td><td>لیست + وضعیت آنالیزها</td></tr>
+      <tr><td><code>/app/analysis/new</code></td><td>آنالیز جدید (ویزارد)</td><td><span class="chip c-paid">ورود</span></td><td>راهنمای زاویه → آپلود → پلن</td></tr>
+      <tr><td><code>/app/analysis/[id]</code></td><td>نتیجهٔ آنالیز</td><td><span class="chip c-paid">ورود</span></td><td>پخش ویدیو + نکات مربی</td></tr>
+      <tr><td><code>/app/booking</code></td><td>رزرو کلاس اسکی</td><td><span class="chip c-paid">ورود</span></td><td>تقویم و رزرو سانس</td></tr>
+      <tr><td><code>/app/training</code></td><td>تمرین دوچرخه</td><td><span class="chip c-p2">فاز ۲</span></td><td>برنامهٔ تمرین و پیشرفت</td></tr>
+      <tr><td><code>/app/videos</code></td><td>کتابخانهٔ ویدیو</td><td><span class="chip c-paid">ورود</span></td><td>پخش آپارات / یوتیوب</td></tr>
+      <tr><td><code>/app/profile</code></td><td>پروفایل و اشتراک</td><td><span class="chip c-paid">ورود</span></td><td>مدیریت پلن، پرداخت، اعلان‌ها</td></tr>
+      <tr><td><code>/shop</code></td><td>فروشگاه لوازم</td><td><span class="chip c-p3">فاز ۳</span></td><td>مارکت‌پلیس تجهیزات</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ================= 5. Screen Inventory ================= -->
+<section id="screens">
+  <div class="sec-num"><b>۵</b><small>SCREEN INVENTORY</small></div>
+  <h2>فهرست صفحات</h2>
+  <p class="lead">۲۲ صفحه/حالت برای MVP و فاز ۲. هر صفحه با محتوای بالای تا (above the fold) و CTA اصلی تعریف شده است.</p>
+  <div class="grid g3">
+    <div class="card"><h4>S01 · خانه (سایت)</h4><p style="font-size:13.5px">هیرو تمام‌عرض با عکس اسکی + نوار KPI (سرعت، ضربان، توان، تعداد آنالیز) + کارت‌های قابلیت + ویدیو نمونه + CTA.</p><span class="chip c-mvp">MVP</span></div>
+    <div class="card"><h4>S02 · قابلیت‌ها</h4><p style="font-size:13.5px">سه ستون: اسکی / دوچرخه / آنالیز ویدیویی؛ هرکدام با نمونهٔ خروجی واقعی.</p><span class="chip c-mvp">MVP</span></div>
+    <div class="card"><h4>S03 · قیمت‌ها و باشگاه</h4><p style="font-size:13.5px">مقایسهٔ ۳ پلن + پرسش‌های متداول + نشان اعتماد. پلن سالیانه هایلایت.</p><span class="chip c-mvp">MVP</span></div>
+    <div class="card"><h4>S04 · ویدیوهای آموزشی</h4><p style="font-size:13.5px">گرید کارت ویدیو با فیلتر رشته؛ embed آپارات/یوتیوب با تصویر جلد.</p><span class="chip c-mvp">MVP</span></div>
+    <div class="card"><h4>S05 · ورود / ثبت‌نام</h4><p style="font-size:13.5px">فرم تک‌ستونه، ورود با کد یکبارمصرف؛ حداکثر ۲ فیلد در گام اول.</p><span class="chip c-mvp">MVP</span></div>
+    <div class="card"><h4>S06 · داشبورد اپ</h4><p style="font-size:13.5px">سلام شخصی + ۴ کارت KPI + نمودار روند + بینش‌های AI + آخرین آنالیزها.</p><span class="chip c-mvp">MVP</span></div>
+    <div class="card"><h4>S07 · لیست آنالیزها</h4><p style="font-size:13.5px">ردیف‌ها با وضعیت (در صف / آماده) + حالت خالی با CTA «اولین آنالیز».</p><span class="chip c-mvp">MVP</span></div>
+    <div class="card"><h4>S08 · ویزارد آنالیز جدید</h4><p style="font-size:13.5px">۴ گام با نوار پیشرفت: رشته → راهنمای زاویه → آپلود → انتخاب پلن.</p><span class="chip c-mvp">MVP</span></div>
+    <div class="card"><h4>S09 · راهنمای زاویهٔ فیلم‌برداری</h4><p style="font-size:13.5px">تصاویر درست/غلط + چک‌لیست ۴ موردی؛ بخشی از ویزارد و قابل دسترسی مستقل.</p><span class="chip c-mvp">MVP</span></div>
+    <div class="card"><h4>S10 · نتیجهٔ آنالیز</h4><p style="font-size:13.5px">پلیر ویدیو با نشانه‌گذاری زمانی + کارت نکات مربی + امتیاز تکنیک + CTA اشتراک.</p><span class="chip c-mvp">MVP</span></div>
+    <div class="card"><h4>S11 · رزرو کلاس — لیست مربی</h4><p style="font-size:13.5px">کارت مربی: عکس، تخصص، امتیاز، قیمت جلسه.</p><span class="chip c-mvp">MVP</span></div>
+    <div class="card"><h4>S12 · رزرو کلاس — تقویم</h4><p style="font-size:13.5px">تقویم شمسی، سانس‌های خالی سبز؛ بنر «جلسهٔ اول VIP رایگان».</p><span class="chip c-mvp">MVP</span></div>
+    <div class="card"><h4>S13 · پرداخت</h4><p style="font-size:13.5px">خلاصهٔ سفارش + درگاه؛ حالت‌های موفق/ناموفق با مسیر بازیابی.</p><span class="chip c-mvp">MVP</span></div>
+    <div class="card"><h4>S14 · پروفایل و اشتراک</h4><p style="font-size:13.5px">وضعیت پلن، تاریخ تمدید، سوابق پرداخت، تنظیم اعلان‌های ایمیلی.</p><span class="chip c-mvp">MVP</span></div>
+    <div class="card"><h4>S15 · تمرین دوچرخه</h4><p style="font-size:13.5px">برنامهٔ هفتگی + حلقهٔ پیشرفت + رکوردهای شخصی.</p><span class="chip c-p2">فاز ۲</span></div>
+    <div class="card"><h4>S16–S22 · تکمیلی</h4><p style="font-size:13.5px">اعلان‌ها، جزئیات ویدیو، ویرایش پروفایل، ۴۰۴/۵۰۰، حالت آفلاین، تأیید ایمیل، صفحهٔ VIP.</p><span class="chip c-p2">MVP+۲</span></div>
+  </div>
+</section>
+
+<!-- ================= 6. Component Inventory ================= -->
+<section id="components">
+  <div class="sec-num"><b>۶</b><small>COMPONENT INVENTORY</small></div>
+  <h2>فهرست کامپوننت‌ها</h2>
+  <p class="lead">هر کامپوننت باید ۸ حالت را پوشش دهد: <strong>پیش‌فرض، هاور، فشرده، فوکوس، غیرفعال، بارگذاری، خطا، خالی</strong> — به‌همراه رفتار واکنش‌گرا و برچسب صفحه‌خوان.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>کامپوننت</th><th>واریانت‌ها</th><th>نکات کلیدی پیاده‌سازی</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Button</strong></td><td>Primary (گرادیان آبی) · Secondary (خط‌دار) · Ghost · Icon · FAB</td><td>ارتفاع ۵۲px، شعاع ۱۴px، فشردن scale(0.97)، اسپینر در حالت بارگذاری، حداقل ناحیهٔ لمس ۴۴px</td></tr>
+      <tr><td><strong>Card</strong></td><td>Feature · Analytics · Video · Coach · Pricing</td><td>سطح سفید، شعاع ۱۸px، پدینگ ۲۰px، سایهٔ نرم، هاور scale(1.02)، هدر تصویری اختیاری + CTA</td></tr>
+      <tr><td><strong>KPI Strip / StatCard</strong></td><td>سرعت · ضربان قلب (قرمز #F65B5B) · توان (سبز #8BC34A) · شمارندهٔ آنالیز</td><td>عدد ۳۴px Bold با شمارندهٔ متحرک، ارقام tabular، آیکن رنگی معنایی + متن</td></tr>
+      <tr><td><strong>Input / Form</strong></td><td>Text · OTP · Select · Textarea · Upload</td><td>لیبل همیشه نمایان، خطا زیر فیلد، اعتبارسنجی هنگام blur، کیبورد معنایی (tel/email)</td></tr>
+      <tr><td><strong>VideoUploader</strong></td><td>Drag&Drop · موبایل (دوربین/گالری)</td><td>نوار پیشرفت، پیش‌نمایش، محدودیت حجم با پیام روشن، ادامهٔ آپلود پس از قطعی</td></tr>
+      <tr><td><strong>VideoPlayer</strong></td><td>محلی · آپارات · یوتیوب</td><td>نشانه‌گذاری زمانی نکات مربی، کنترل با کیبورد، پوستر ۱۶:۹ برای جلوگیری از CLS</td></tr>
+      <tr><td><strong>Chart</strong></td><td>Line (روند) · Bar گرد (مقایسه) · Donut (ترکیب) · ProgressRing</td><td>پالت آبی/سبز، گرید کم‌رنگ، تولتیپ لمسی، جدول جایگزین برای صفحه‌خوان</td></tr>
+      <tr><td><strong>Tabs / SegmentedControl</strong></td><td>اسکی | دوچرخه · هفته | ماه | سال</td><td>نشانگر متحرک ۲۰۰ms، پشتیبانی جهت RTL در حرکت نشانگر</td></tr>
+      <tr><td><strong>BottomNav</strong></td><td>خانه · آنالیز · تمرین · ویدیوها · پروفایل</td><td>۵ مقصد با آیکن+برچسب، نشان (badge) اعلان، ارتفاع امن iOS/Android</td></tr>
+      <tr><td><strong>Calendar / SlotPicker</strong></td><td>ماهانه شمسی · لیست سانس</td><td>سانس خالی سبز، پر خاکستری، انتخاب‌شده آبی؛ ناوبری کیبورد بین روزها</td></tr>
+      <tr><td><strong>Dialog / BottomSheet</strong></td><td>تأیید · جزئیات · فیلتر</td><td>حرکت از پایین در موبایل، اسکریم ۵۰٪، بستن با کشیدن، فوکوس محبوس</td></tr>
+      <tr><td><strong>Toast / Banner</strong></td><td>موفق · خطا · اطلاع («ایمیل اومده!»)</td><td>aria-live="polite"، بسته‌شدن خودکار ۴ ثانیه، آیکن + رنگ + متن (نه فقط رنگ)</td></tr>
+      <tr><td><strong>StatusBadge</strong></td><td>در صف · در حال بررسی · آماده · ناموفق</td><td>رنگ معنایی + آیکن؛ در لیست آنالیزها و ایمیل‌ها یکسان</td></tr>
+      <tr><td><strong>PlanCard / PaywallBanner</strong></td><td>رایگان · تکی · سالیانه (هایلایت) · VIP</td><td>پلن پیشنهادی با نوار «پرطرفدار»، مقایسهٔ ویژگی با ✓/—</td></tr>
+      <tr><td><strong>EmptyState</strong></td><td>بدون آنالیز · بدون رزرو · بدون نتیجه</td><td>تصویر + یک جمله + CTA سازنده؛ هرگز صفحهٔ خالی بی‌راهنما</td></tr>
+      <tr><td><strong>Accordion / Table / Header / HeroSection / Footer</strong></td><td>—</td><td>طبق توکن‌های بخش ۹؛ هدر روی هیرو شفاف و پس از اسکرول سفید</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ================= 7. Dashboard Architecture ================= -->
+<section id="dashboard">
+  <div class="sec-num"><b>۷</b><small>DASHBOARD ARCHITECTURE</small></div>
+  <h2>معماری داشبورد</h2>
+  <p class="lead">دسکتاپ: سایدبار + گرید ۱۲ ستونه. موبایل: همان ماژول‌ها به‌صورت تک‌ستونه با ناوبری پایینی. داده‌های حیاتی (KPI) همیشه بالای تا.</p>
+  <div class="dash" role="img" aria-label="طرح شماتیک داشبورد ورزشکار">
+    <div class="dash-top"><span>🏔 SportAnalyze</span><span style="color:var(--text-2);font-weight:400">سلام کامبیز 👋 · اشتراک سالیانه فعال</span></div>
+    <div class="dash-grid">
+      <div class="dash-side">
+        <a class="on">📊 داشبورد</a><a>🎥 آنالیزهای من</a><a>🚴 تمرین</a><a>⛷ رزرو کلاس</a><a>▶️ ویدیوها</a><a>👤 پروفایل</a>
+      </div>
+      <div class="dash-main">
+        <div class="dash-kpis">
+          <div class="dk"><span>سرعت اوج</span><b>۷۲ <small style="font-size:9px">km/h</small></b><span class="up">↑ ۸٪ این ماه</span></div>
+          <div class="dk"><span>ضربان قلب</span><b style="color:var(--hr)">۱۵۸ <small style="font-size:9px">bpm</small></b><span class="up">میانگین تمرین</span></div>
+          <div class="dk"><span>توان خروجی</span><b style="color:#6B9E2E">۳۲۰ <small style="font-size:9px">W</small></b><span class="up">↑ ۱۲٪</span></div>
+          <div class="dk"><span>آنالیزهای انجام‌شده</span><b>۱۴</b><span class="up">۲ در صف بررسی</span></div>
+        </div>
+        <div class="dash-row">
+          <div class="dp">
+            <h6>روند عملکرد — ۸ هفتهٔ اخیر</h6>
+            <div class="spark">
+              <i style="height:35%"></i><i style="height:48%"></i><i style="height:42%"></i><i style="height:60%"></i><i style="height:55%"></i><i style="height:72%"></i><i style="height:68%"></i><i style="height:85%"></i>
+            </div>
+          </div>
+          <div class="dp">
+            <h6>💡 بینش‌های هوشمند</h6>
+            <div class="ai-item"><span class="ai-dot"></span>زاویهٔ زانو در پیچ‌های چپ ۱۲٪ بهبود یافته</div>
+            <div class="ai-item"><span class="ai-dot" style="background:var(--warning)"></span>کدنس شما در شیب‌ها پایین‌تر از هدف است</div>
+            <div class="ai-item"><span class="ai-dot" style="background:var(--primary)"></span>پیشنهاد: ویدیوی «تکنیک کارو» را ببینید</div>
+          </div>
+        </div>
+        <div class="dash-row">
+          <div class="dp">
+            <h6>آخرین آنالیزها</h6>
+            <div class="ai-item"><span class="ai-dot"></span>اسکی — پیست دیزین · <b style="color:var(--success)">آماده</b> · امتیاز تکنیک ۷.۸</div>
+            <div class="ai-item"><span class="ai-dot" style="background:var(--warning)"></span>دوچرخه — تایم‌تریل · <b style="color:#B58400">در حال بررسی</b></div>
+          </div>
+          <div class="dp">
+            <h6>جلسهٔ بعدی</h6>
+            <div class="ai-item"><span class="ai-dot" style="background:var(--primary)"></span>کلاس اسکی با مربی آرش — پنجشنبه ۱۰:۰۰</div>
+            <div class="ai-item"><span class="ai-dot" style="background:var(--danger)"></span>رکورد شخصی سرعت: ۷۲ km/h 🏆</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="grid g4" style="margin-top:20px">
+    <div class="card"><h4 style="margin-top:0">ماژول‌های الزامی</h4><p style="font-size:13px">KPI · روند · بینش AI · آنالیز تکنیک · بازبینی ویدیو · پیشنهاد تمرین</p></div>
+    <div class="card"><h4 style="margin-top:0">ماژول‌های ثانویه</h4><p style="font-size:13px">رکوردهای شخصی · پیگیری هدف · مقایسه‌ای · بازخورد مربی · تاریخچهٔ جلسات</p></div>
+    <div class="card"><h4 style="margin-top:0">قانون چیدمان</h4><p style="font-size:13px">KPI بالای تا؛ هر ردیف حداکثر ۲ ماژول؛ موبایل تک‌ستونه به همان ترتیب.</p></div>
+    <div class="card"><h4 style="margin-top:0">حالت خالی</h4><p style="font-size:13px">کاربر جدید: به‌جای نمودار خالی، کارت «اولین آنالیزت را شروع کن».</p></div>
+  </div>
+</section>
+
+<!-- ================= 8. Mobile Wireframes ================= -->
+<section id="wireframes">
+  <div class="sec-num"><b>۸</b><small>MOBILE WIREFRAMES</small></div>
+  <h2>وایرفریم موبایل</h2>
+  <p class="lead">چهار صفحهٔ کلیدی در مقیاس ۳۷۵px — چیدمان RTL، ناوبری پایینی ۵تایی، و یک CTA اصلی در هر صفحه.</p>
+  <div class="phones">
+
+    <!-- Phone 1: Landing -->
+    <div>
+      <div class="phone">
+        <div class="label">W1 · خانهٔ سایت</div>
+        <div class="screen"><div class="wf-body">
+          <div class="wf-head"><span>🏔 SPORTANALYZE</span><span>☰</span></div>
+          <div class="wf-hero">
+            <h5>عملکردت را با داده بهینه کن</h5>
+            <p>آنالیز پیشرفتهٔ اسکی، دوچرخه‌سواری و بیشتر</p>
+            <span class="wf-btn">شروع کنید</span> <span class="wf-btn ghost">▶ دمو</span>
+          </div>
+          <div class="wf-kpis">
+            <div><b>۷۲</b><span>سرعت km/h</span></div>
+            <div><b style="color:var(--hr)">۱۵۸</b><span>ضربان bpm</span></div>
+            <div><b style="color:#6B9E2E">۳۲۰</b><span>توان W</span></div>
+            <div><b>+۱٬۲۵۰</b><span>آنالیز ویدیو</span></div>
+          </div>
+          <div class="wf-sec">
+            <h6 style="text-align:center">بسنج. تحلیل کن. پیشرفت کن.</h6>
+            <div class="wf-cards">
+              <div class="wf-card"><div class="wf-thumb">⛷</div><b>عملکرد اسکی</b><span>تحلیل تکنیک و سرعت</span></div>
+              <div class="wf-card"><div class="wf-thumb">🚴</div><b>متریک دوچرخه</b><span>توان، کدنس، ضربان</span></div>
+            </div>
+          </div>
+          <div class="wf-video"><span class="wf-play">▶</span></div>
+          <div class="wf-sec" style="text-align:center"><span class="wf-btn success">همین حالا شروع کن</span></div>
+          <div class="wf-nav"><span class="on"><b>⌂</b>خانه</span><span><b>📊</b>آنالیز</span><span><b>🚴</b>تمرین</span><span><b>▶</b>ویدیو</span><span><b>👤</b>پروفایل</span></div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- Phone 2: Dashboard -->
+    <div>
+      <div class="phone">
+        <div class="label">W2 · داشبورد</div>
+        <div class="screen"><div class="wf-body">
+          <div class="wf-head"><span>سلام کامبیز 👋</span><span>🔔</span></div>
+          <div class="wf-kpis">
+            <div><b>۷۲</b><span>سرعت</span></div>
+            <div><b style="color:var(--hr)">۱۵۸</b><span>ضربان</span></div>
+            <div><b style="color:#6B9E2E">۳۲۰</b><span>توان</span></div>
+            <div><b>۱۴</b><span>آنالیز</span></div>
+          </div>
+          <div class="wf-sec">
+            <h6>روند عملکرد</h6>
+            <div class="wf-card" style="padding:9px">
+              <div style="display:flex;align-items:flex-end;gap:3px;height:44px">
+                <i style="flex:1;background:linear-gradient(180deg,var(--primary),var(--primary-dark));border-radius:2px;height:35%"></i>
+                <i style="flex:1;background:linear-gradient(180deg,var(--primary),var(--primary-dark));border-radius:2px;height:50%"></i>
+                <i style="flex:1;background:linear-gradient(180deg,var(--primary),var(--primary-dark));border-radius:2px;height:42%"></i>
+                <i style="flex:1;background:linear-gradient(180deg,var(--primary),var(--primary-dark));border-radius:2px;height:65%"></i>
+                <i style="flex:1;background:linear-gradient(180deg,var(--primary),var(--primary-dark));border-radius:2px;height:58%"></i>
+                <i style="flex:1;background:linear-gradient(180deg,var(--primary),var(--primary-dark));border-radius:2px;height:80%"></i>
+              </div>
+            </div>
+          </div>
+          <div class="wf-sec" style="padding-top:0">
+            <h6>💡 بینش هوشمند</h6>
+            <div class="wf-card"><span>زاویهٔ زانو در پیچ‌های چپ ۱۲٪ بهتر شده — ادامه بده!</span></div>
+          </div>
+          <div class="wf-sec" style="padding-top:0">
+            <h6>آخرین آنالیزها</h6>
+            <div class="wf-row"><div><b>اسکی — دیزین</b><span>امتیاز ۷.۸</span></div><span class="wf-tag" style="background:#E8F9F1;color:#0E9F68">آماده</span></div>
+            <div class="wf-row" style="margin-top:5px"><div><b>دوچرخه — تایم‌تریل</b><span>دیروز</span></div><span class="wf-tag" style="background:#FDF3DC;color:#B58400">در بررسی</span></div>
+          </div>
+          <div class="wf-nav"><span><b>⌂</b>خانه</span><span class="on"><b>📊</b>آنالیز</span><span><b>🚴</b>تمرین</span><span><b>▶</b>ویدیو</span><span><b>👤</b>پروفایل</span></div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- Phone 3: New Analysis Wizard -->
+    <div>
+      <div class="phone">
+        <div class="label">W3 · ویزارد آنالیز جدید</div>
+        <div class="screen"><div class="wf-body">
+          <div class="wf-head"><span>آنالیز جدید</span><span>✕</span></div>
+          <div class="wf-sec">
+            <div class="wf-bar"><i style="width:50%;background:var(--primary)"></i></div>
+            <span style="font-size:7.5px;color:var(--text-2)">گام ۲ از ۴ — راهنمای فیلم‌برداری</span>
+          </div>
+          <div class="wf-sec" style="padding-top:2px">
+            <h6>📐 زاویهٔ درست فیلم‌برداری</h6>
+            <div class="wf-cards">
+              <div class="wf-card" style="border-color:var(--success)"><div class="wf-thumb" style="background:#E8F9F1;color:#0E9F68">✓</div><b>از پهلو، هم‌سطح</b><span>فاصلهٔ ۵–۱۰ متر</span></div>
+              <div class="wf-card" style="border-color:var(--danger)"><div class="wf-thumb" style="background:#FBEAE8;color:#C23328">✕</div><b>از بالا یا لرزان</b><span>زاویهٔ بسته ممنوع</span></div>
+            </div>
+          </div>
+          <div class="wf-sec">
+            <div class="wf-card" style="border:1.5px dashed var(--primary);text-align:center;padding:14px 8px;background:#F4FBFE">
+              <b style="color:var(--primary-dark);font-size:9.5px">⬆ ویدیوی خود را بارگذاری کنید</b>
+              <span>MP4 / MOV · حداکثر ۵۰۰MB</span>
+            </div>
+          </div>
+          <div class="wf-sec" style="padding-top:0">
+            <h6>انتخاب پلن</h6>
+            <div class="wf-row" style="border-color:var(--primary);background:#F4FBFE"><div><b>آنالیز کامل</b><span>نکات مربی + مقایسه فریم‌به‌فریم</span></div><span class="wf-tag" style="background:#E8F6FD;color:var(--primary-dark)">پیشنهادی</span></div>
+            <div class="wf-row" style="margin-top:5px"><div><b>آنالیز پایه — رایگان</b><span>بازخورد کلی</span></div><span class="wf-tag" style="background:#F3F4F6;color:#6B7280">رایگان</span></div>
+          </div>
+          <div class="wf-sec" style="margin-top:auto;text-align:center;padding-bottom:4px"><span class="wf-btn" style="display:block;padding:8px">ادامه ←</span></div>
+          <div class="wf-nav"><span><b>⌂</b>خانه</span><span class="on"><b>📊</b>آنالیز</span><span><b>🚴</b>تمرین</span><span><b>▶</b>ویدیو</span><span><b>👤</b>پروفایل</span></div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- Phone 4: Booking -->
+    <div>
+      <div class="phone">
+        <div class="label">W4 · رزرو کلاس اسکی</div>
+        <div class="screen"><div class="wf-body">
+          <div class="wf-head"><span>رزرو کلاس</span><span>🔔</span></div>
+          <div class="wf-sec">
+            <div class="wf-card" style="background:linear-gradient(135deg,#FDF6E3,#FDF3DC);border-color:#F5E2AC">
+              <b style="font-size:9px">⭐ عضو VIP هستید — جلسهٔ اول رایگان!</b>
+            </div>
+          </div>
+          <div class="wf-sec" style="padding-top:2px">
+            <h6>مربی خود را انتخاب کنید</h6>
+            <div class="wf-row"><div style="display:flex;gap:6px;align-items:center"><span style="width:22px;height:22px;border-radius:50%;background:#D6EDF9;display:inline-flex;align-items:center;justify-content:center">⛷</span><div><b>مربی آرش</b><span>اسکی آلپاین · ⭐ ۴.۹</span></div></div><span class="wf-tag" style="background:#E8F6FD;color:var(--primary-dark)">انتخاب</span></div>
+            <div class="wf-row" style="margin-top:5px"><div style="display:flex;gap:6px;align-items:center"><span style="width:22px;height:22px;border-radius:50%;background:#D6EDF9;display:inline-flex;align-items:center;justify-content:center">⛷</span><div><b>مربی نازنین</b><span>مبتدی تا متوسط · ⭐ ۴.۸</span></div></div><span></span></div>
+          </div>
+          <div class="wf-sec">
+            <h6>پنجشنبه ۱۸ تیر</h6>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px">
+              <div class="wf-card" style="text-align:center;border-color:var(--success);background:#F2FBF7"><b style="font-size:8.5px">۰۸:۰۰</b><span style="color:#0E9F68">خالی</span></div>
+              <div class="wf-card" style="text-align:center;border-color:var(--primary);background:#E8F6FD"><b style="font-size:8.5px;color:var(--primary-dark)">۱۰:۰۰</b><span style="color:var(--primary-dark)">انتخاب ✓</span></div>
+              <div class="wf-card" style="text-align:center;opacity:.55"><b style="font-size:8.5px">۱۴:۰۰</b><span>پُر</span></div>
+            </div>
+          </div>
+          <div class="wf-sec" style="margin-top:auto;padding-bottom:4px">
+            <div class="wf-row" style="background:#F4FBFE;border-color:var(--primary)"><div><b>جمع: رایگان (VIP)</b><span>کلاس خصوصی ۱ ساعته</span></div><span class="wf-btn" style="font-size:8px">تأیید رزرو</span></div>
+          </div>
+          <div class="wf-nav"><span><b>⌂</b>خانه</span><span><b>📊</b>آنالیز</span><span><b>🚴</b>تمرین</span><span><b>▶</b>ویدیو</span><span class="on"><b>👤</b>پروفایل</span></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:13px;margin-top:16px">※ آیکن‌های اموجی صرفاً جایگزین وایرفریمی هستند؛ در پیاده‌سازی از <strong>Lucide Icons</strong> (SVG با ضخامت خط یکنواخت) استفاده شود.</p>
+</section>
+
+<!-- ================= 9. UI Specs ================= -->
+<section id="specs">
+  <div class="sec-num"><b>۹</b><small>HIGH-FIDELITY UI SPECIFICATIONS</small></div>
+  <h2>مشخصات UI با جزئیات کامل</h2>
+
+  <h3>۹.۱ — رنگ‌ها (Design Tokens)</h3>
+  <div class="swatches">
+    <div class="sw"><div class="c" style="background:#18A8E5"></div><div class="i"><b>Primary</b><code>#18A8E5</code></div></div>
+    <div class="sw"><div class="c" style="background:#0D8BD8"></div><div class="i"><b>Primary Dark</b><code>#0D8BD8</code></div></div>
+    <div class="sw"><div class="c" style="background:#0F172A"></div><div class="i"><b>Navy</b><code>#0F172A</code></div></div>
+    <div class="sw"><div class="c" style="background:#16C784"></div><div class="i"><b>Success</b><code>#16C784</code></div></div>
+    <div class="sw"><div class="c" style="background:#F7B500"></div><div class="i"><b>Warning</b><code>#F7B500</code></div></div>
+    <div class="sw"><div class="c" style="background:#F04438"></div><div class="i"><b>Danger</b><code>#F04438</code></div></div>
+    <div class="sw"><div class="c" style="background:#F65B5B"></div><div class="i"><b>Heart Rate</b><code>#F65B5B</code></div></div>
+    <div class="sw"><div class="c" style="background:#8BC34A"></div><div class="i"><b>Power</b><code>#8BC34A</code></div></div>
+    <div class="sw"><div class="c" style="background:#F7F9FC;border-bottom:1px solid var(--border)"></div><div class="i"><b>Background</b><code>#F7F9FC</code></div></div>
+    <div class="sw"><div class="c" style="background:#FFFFFF;border-bottom:1px solid var(--border)"></div><div class="i"><b>Surface</b><code>#FFFFFF</code></div></div>
+    <div class="sw"><div class="c" style="background:#E5E7EB"></div><div class="i"><b>Border</b><code>#E5E7EB</code></div></div>
+    <div class="sw"><div class="c" style="background:#111827"></div><div class="i"><b>Text</b><code>#111827</code></div></div>
+  </div>
+  <p style="font-size:13.5px;margin-top:12px">⚠️ قانون کنتراست: متن بدنه روی سطوح روشن حداقل <strong>4.5:1</strong>. رنگ Primary فقط برای عناصر بزرگ/تعاملی؛ برای متن روی سفید از Primary Dark استفاده شود. رنگ هرگز تنها حامل معنا نیست (آیکن + متن الزامی).</p>
+
+  <h3>۹.۲ — تایپوگرافی</h3>
+  <div class="card">
+    <p style="font-size:13.5px;margin-bottom:10px">فونت فارسی: <strong>Vazirmatn</strong> (وزن‌های ۴۰۰–۸۰۰) · فونت لاتین/اعداد داشبورد: <strong>Inter / SF Pro Display</strong> · اعداد آماری: tabular-nums</p>
+    <div class="typo-row"><span class="demo" style="font-size:48px;font-weight:700;line-height:1.2">عنوان اصلی H1</span><span class="spec">48px · Bold · هیروها</span></div>
+    <div class="typo-row"><span class="demo" style="font-size:38px;font-weight:700;line-height:1.25">عنوان H2</span><span class="spec">38px · Bold · عنوان بخش</span></div>
+    <div class="typo-row"><span class="demo" style="font-size:30px;font-weight:600">عنوان H3</span><span class="spec">30px · SemiBold</span></div>
+    <div class="typo-row"><span class="demo" style="font-size:24px;font-weight:600">عنوان H4</span><span class="spec">24px · SemiBold · عنوان کارت</span></div>
+    <div class="typo-row"><span class="demo" style="font-size:34px;font-weight:800;color:var(--primary-dark)">۳۲۰ W</span><span class="spec">34px · Bold · KPI با شمارندهٔ متحرک</span></div>
+    <div class="typo-row"><span class="demo" style="font-size:16px">متن بدنه — ارتفاع خط ۱.۷۵ برای فارسی</span><span class="spec">16px · Regular · line-height 1.75</span></div>
+    <div class="typo-row"><span class="demo" style="font-size:16px;font-weight:600">متن دکمه</span><span class="spec">16px · SemiBold</span></div>
+    <div class="typo-row"><span class="demo" style="font-size:12px;color:var(--text-2)">کپشن و برچسب‌های کوچک</span><span class="spec">12px · Regular · حداقل مجاز</span></div>
+  </div>
+
+  <h3>۹.۳ — فاصله‌گذاری، شعاع و سایه</h3>
+  <div class="grid g3">
+    <div class="card"><h4 style="margin-top:0">فاصله (پایه 8px)</h4><p style="font-size:13.5px;direction:ltr;text-align:left"><code>4 · 8 · 12 · 16 · 20 · 24 · 32 · 40 · 48 · 64 · 80 · 96</code></p><p style="font-size:13px">پدینگ کارت ۲۰px · فاصلهٔ بخش‌ها ۴۸–۹۶px · گاتر گرید ۱۶–۲۴px</p></div>
+    <div class="card"><h4 style="margin-top:0">شعاع گوشه</h4><p style="font-size:13.5px">دکمه <strong>14px</strong> · کارت <strong>18px</strong> · مودال <strong>24px</strong> · اینپوت <strong>12px</strong> · چیپ/آواتار <strong>999px</strong></p></div>
+    <div class="card"><h4 style="margin-top:0">سایه (۳ سطح)</h4><p style="font-size:12.5px;direction:ltr;text-align:left"><code>sm: 0 2 8 rgba(0,0,0,.06)<br>md: 0 8 20 rgba(0,0,0,.08)<br>lg: 0 16 40 rgba(0,0,0,.12)</code></p></div>
+  </div>
+
+  <h3>۹.۴ — حرکت و میکرواینترکشن</h3>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>تعامل</th><th>مشخصات</th></tr></thead>
+    <tbody>
+      <tr><td>پیش‌فرض همهٔ ترنزیشن‌ها</td><td><code>200ms ease-out</code> — خروج‌ها ۶۰–۷۰٪ کوتاه‌تر از ورودها</td></tr>
+      <tr><td>هاور کارت</td><td><code>scale(1.02)</code> + ارتقای سایه sm→md</td></tr>
+      <tr><td>فشردن دکمه</td><td><code>scale(0.97)</code> — بازخورد بصری در کمتر از ۱۰۰ms</td></tr>
+      <tr><td>ورود عناصر</td><td>fade + slide از پایین ۱۲px؛ لیست‌ها با stagger ۴۰ms</td></tr>
+      <tr><td>شمارنده‌های KPI</td><td>count-up در ۸۰۰ms هنگام ورود به viewport، فقط یک‌بار</td></tr>
+      <tr><td>باتم‌شیت / مودال</td><td>slide-up 250ms + اسکریم ۵۰٪ · بستن با drag</td></tr>
+      <tr><td>reduced-motion</td><td>با <code>prefers-reduced-motion</code> همهٔ حرکات حذف؛ داده بلافاصله نمایان</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>۹.۵ — دسترس‌پذیری (WCAG AA) و RTL</h3>
+  <div class="grid g2">
+    <div class="card"><h4 style="margin-top:0">چک‌لیست دسترس‌پذیری</h4><p style="font-size:14px">✓ ناحیهٔ لمس ≥ ۴۴×۴۴px با فاصلهٔ ≥ ۸px ✓ فوکوس نمایان (رینگ ۲px آبی) ✓ ترتیب کیبورد = ترتیب بصری ✓ لیبل صفحه‌خوان برای دکمه‌های آیکنی ✓ خطای فرم زیر فیلد + <code>aria-live</code> ✓ جدول جایگزین برای نمودارها ✓ سلسله‌مراتب هدینگ بدون پرش</p></div>
+    <div class="card"><h4 style="margin-top:0">قواعد RTL</h4><p style="font-size:14px">✓ استفاده از ویژگی‌های منطقی CSS (<code>margin-inline-start</code> به‌جای left/right) ✓ آینه‌شدن آیکن‌های جهت‌دار (فلش‌ها) و نه آیکن‌های خنثی ✓ اعداد فارسی در متن، لاتین در نمودار و کد ✓ اسلایدر و پیشرفت از راست به چپ ✓ تست هر کامپوننت در هر دو جهت</p></div>
+  </div>
+</section>
+
+<!-- ================= 10. Frontend Architecture ================= -->
+<section id="frontend">
+  <div class="sec-num"><b>۱۰</b><small>FRONTEND ARCHITECTURE</small></div>
+  <h2>معماری فرانت‌اند</h2>
+  <p class="lead">Next.js با App Router؛ صفحات بازاریابی سرور-رندر برای سئو، اپ ورزشکار کلاینت-محور با کش داده. RTL و فارسی از روز اول در معماری، نه به‌عنوان وصله.</p>
+  <div class="grid g2">
+    <div>
+      <h4>ساختار پروژه</h4>
+<pre class="code">src/
+├── app/
+│   ├── (marketing)/          <span class="c">// سایت — SSR/SSG</span>
+│   │   ├── page.tsx          <span class="c">// خانه</span>
+│   │   ├── features/  pricing/  videos/
+│   ├── (app)/                <span class="c">// اپ — نیازمند ورود</span>
+│   │   ├── layout.tsx        <span class="c">// سایدبار/باتم‌نو</span>
+│   │   ├── page.tsx          <span class="c">// داشبورد</span>
+│   │   ├── analysis/ [id]/ new/
+│   │   ├── booking/  training/  videos/  profile/
+│   ├── auth/
+│   └── layout.tsx            <span class="c">// dir="rtl" lang="fa"</span>
+├── components/
+│   ├── ui/                   <span class="c">// shadcn — Button, Card…</span>
+│   ├── charts/               <span class="c">// Recharts wrappers</span>
+│   ├── analysis/  booking/  dashboard/
+├── lib/  hooks/  stores/
+├── styles/tokens.css         <span class="c">// توکن‌های طراحی</span>
+└── messages/fa.json en.json  <span class="c">// next-intl</span></pre>
+    </div>
+    <div>
+      <h4>استک و تصمیم‌ها</h4>
+      <div class="tbl-wrap"><table class="tbl">
+        <tbody>
+          <tr><td><strong>فریم‌ورک</strong></td><td>Next.js 14+ · TypeScript strict</td></tr>
+          <tr><td><strong>استایل</strong></td><td>Tailwind CSS + توکن‌های CSS · ویژگی‌های منطقی برای RTL</td></tr>
+          <tr><td><strong>کامپوننت</strong></td><td>shadcn/ui (تم‌شده با توکن‌ها) + Lucide Icons</td></tr>
+          <tr><td><strong>حرکت</strong></td><td>Framer Motion · respect reduced-motion</td></tr>
+          <tr><td><strong>نمودار</strong></td><td>Recharts — بار گرد، خطی، دونات</td></tr>
+          <tr><td><strong>فرم</strong></td><td>React Hook Form + Zod (اسکیمای مشترک با سرور)</td></tr>
+          <tr><td><strong>دادهٔ سرور</strong></td><td>TanStack Query · وضعیت آنالیز با polling/SSE</td></tr>
+          <tr><td><strong>i18n / RTL</strong></td><td>next-intl · فارسی پیش‌فرض · <code>dir</code> از locale</td></tr>
+          <tr><td><strong>آپلود ویدیو</strong></td><td>آپلود مستقیم به استوریج (pre-signed URL) + resumable</td></tr>
+          <tr><td><strong>ویدیوی خارجی</strong></td><td>embed آپارات/یوتیوب با lazy-load و پوستر ۱۶:۹</td></tr>
+          <tr><td><strong>ایمیل</strong></td><td>قالب‌های تراکنشی: آنالیز آماده، تأیید رزرو، تمدید</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 11. Design to Code ================= -->
+<section id="d2c">
+  <div class="sec-num"><b>۱۱</b><small>DESIGN-TO-CODE PLAN</small></div>
+  <h2>برنامهٔ طراحی تا کد</h2>
+  <p class="lead">یک منبع حقیقت: توکن‌های JSON → متغیرهای CSS → Tailwind → کامپوننت‌ها. هیچ مقدار خامی (hex یا px دلخواه) داخل کامپوننت‌ها مجاز نیست.</p>
+  <div class="grid g2">
+    <div>
+      <h4>design-tokens.json (خلاصه)</h4>
+<pre class="code">{
+  <span class="k">"color"</span>: {
+    <span class="k">"primary"</span>: { <span class="k">"DEFAULT"</span>: <span class="s">"#18A8E5"</span>, <span class="k">"dark"</span>: <span class="s">"#0D8BD8"</span> },
+    <span class="k">"navy"</span>: <span class="s">"#0F172A"</span>,
+    <span class="k">"success"</span>: <span class="s">"#16C784"</span>, <span class="k">"warning"</span>: <span class="s">"#F7B500"</span>,
+    <span class="k">"danger"</span>: <span class="s">"#F04438"</span>,
+    <span class="k">"metric"</span>: { <span class="k">"hr"</span>: <span class="s">"#F65B5B"</span>, <span class="k">"power"</span>: <span class="s">"#8BC34A"</span> },
+    <span class="k">"bg"</span>: <span class="s">"#F7F9FC"</span>, <span class="k">"surface"</span>: <span class="s">"#FFFFFF"</span>,
+    <span class="k">"border"</span>: <span class="s">"#E5E7EB"</span>,
+    <span class="k">"text"</span>: { <span class="k">"DEFAULT"</span>: <span class="s">"#111827"</span>, <span class="k">"muted"</span>: <span class="s">"#6B7280"</span> }
+  },
+  <span class="k">"radius"</span>: { <span class="k">"sm"</span>:8, <span class="k">"md"</span>:12, <span class="k">"btn"</span>:14, <span class="k">"lg"</span>:18, <span class="k">"xl"</span>:24, <span class="k">"pill"</span>:999 },
+  <span class="k">"spacing"</span>: [4,8,12,16,20,24,32,40,48,64,80,96],
+  <span class="k">"font"</span>: { <span class="k">"fa"</span>: <span class="s">"Vazirmatn"</span>, <span class="k">"latin"</span>: <span class="s">"Inter"</span> },
+  <span class="k">"motion"</span>: { <span class="k">"base"</span>: <span class="s">"200ms ease-out"</span>,
+    <span class="k">"hover"</span>:1.02, <span class="k">"press"</span>:0.97 }
+}</pre>
+    </div>
+    <div>
+      <h4>ترتیب ساخت کامپوننت‌ها</h4>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>گام</th><th>تحویل</th><th>وابسته به</th></tr></thead>
+        <tbody>
+          <tr><td>۱</td><td>توکن‌ها + پیکربندی Tailwind + تم shadcn + فونت‌ها</td><td>—</td></tr>
+          <tr><td>۲</td><td>اتم‌ها: Button، Input، Chip، Badge، Toast</td><td>گام ۱</td></tr>
+          <tr><td>۳</td><td>مولکول‌ها: Card ها، KPI، Tabs، BottomNav، Dialog</td><td>گام ۲</td></tr>
+          <tr><td>۴</td><td>ارگانیسم‌ها: Hero، KPI Strip، VideoUploader، Calendar، Charts</td><td>گام ۳</td></tr>
+          <tr><td>۵</td><td>قالب صفحات: Marketing Layout و App Layout</td><td>گام ۴</td></tr>
+          <tr><td>۶</td><td>صفحات کامل + اتصال API + حالت‌های خالی/خطا/بارگذاری</td><td>گام ۵</td></tr>
+        </tbody>
+      </table></div>
+      <h4>قواعد کیفیت</h4>
+      <p style="font-size:14px">هر PR باید شامل: استوری‌بوک ۸ حالت کامپوننت، تست دسترس‌پذیری (axe)، اسکرین‌شات RTL موبایل ۳۷۵px و دسکتاپ، و بدون مقدار hex/px خام باشد.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 12. Roadmap ================= -->
+<section id="roadmap" style="border-bottom:none">
+  <div class="sec-num"><b>۱۲</b><small>DEVELOPMENT ROADMAP</small></div>
+  <h2>نقشهٔ راه توسعه</h2>
+  <p class="lead">چهار فاز؛ MVP در ۸ هفته با تمرکز روی جریان طلایی (آپلود → آنالیز → اشتراک). هر فاز با معیار موفقیت قابل‌سنجش.</p>
+  <div class="phases">
+    <div class="phase">
+      <header style="background:linear-gradient(135deg,var(--primary),var(--primary-dark))">فاز ۰ — پایه <span class="dur">· ۲ هفته</span></header>
+      <ul>
+        <li>سیستم طراحی در Figma + توکن‌ها</li>
+        <li>راه‌اندازی Next.js، CI/CD و استوری‌بوک</li>
+        <li>کامپوننت‌های اتمی (گام ۱–۲)</li>
+        <li>احراز هویت + اسکلت صفحات</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <header style="background:linear-gradient(135deg,#0E9F68,var(--success))">فاز ۱ — MVP <span class="dur">· ۶ هفته</span></header>
+      <ul>
+        <li>سایت بازاریابی کامل (خانه، قیمت، ویدیوها)</li>
+        <li>جریان طلایی: راهنمای زاویه → آپلود → آنالیز</li>
+        <li>رزرو کلاس اسکی + پرداخت</li>
+        <li>باشگاه مشتریان و اشتراک سالیانه</li>
+        <li>اعلان‌های ایمیلی + داشبورد پایه</li>
+        <li>معیار: ۱۰۰ آنالیز اول، تبدیل ≥ ۳٪</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <header style="background:linear-gradient(135deg,#B58400,var(--warning))">فاز ۲ — رشد <span class="dur">· ۶ هفته</span></header>
+      <ul>
+        <li>تمرین دوچرخه + حلقه‌های پیشرفت</li>
+        <li>جلسات رایگان VIP + سطح‌بندی اعضا</li>
+        <li>بینش‌های AI در داشبورد</li>
+        <li>مقایسهٔ فریم‌به‌فریم پیشرفته</li>
+        <li>اپ PWA (نصب روی موبایل + آفلاین)</li>
+        <li>معیار: نگهداشت ماه اول ≥ ۳۵٪</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <header style="background:linear-gradient(135deg,#334155,var(--navy))">فاز ۳ — اکوسیستم <span class="dur">· ۸ هفته+</span></header>
+      <ul>
+        <li>فروشگاه لوازم نو و دست‌دوم</li>
+        <li>پنل مربی (صف آنالیز، مدیریت کلاس)</li>
+        <li>حالت تیره (Dark Mode)</li>
+        <li>نسخهٔ انگلیسی (LTR) و بازارهای جدید</li>
+        <li>اتصال به سنسورها (ساعت/پاورمتر)</li>
+        <li>معیار: درآمد تکرارشوندهٔ پایدار</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top:32px">ریسک‌ها و تصمیم‌های باز</h3>
+  <div class="grid g3">
+    <div class="card"><h4 style="margin-top:0">⚠️ ظرفیت مربی</h4><p style="font-size:13.5px">آنالیز انسانی مقیاس‌پذیر نیست؛ SLA زمان تحویل (مثلاً ۴۸ ساعت) تعریف و در UI نمایش داده شود.</p></div>
+    <div class="card"><h4 style="margin-top:0">⚠️ حجم ویدیو</h4><p style="font-size:13.5px">فشرده‌سازی سمت کلاینت قبل از آپلود + سقف حجم؛ هزینهٔ استوریج در قیمت‌گذاری لحاظ شود.</p></div>
+    <div class="card"><h4 style="margin-top:0">⚠️ پرداخت و درگاه</h4><p style="font-size:13.5px">انتخاب درگاه داخلی (شاپرک) در فاز ۰ نهایی شود؛ معماری پرداخت مستقل از درگاه طراحی شده است.</p></div>
+  </div>
+</section>
+<!-- APPEND -->
+</main>
+<footer>SportAnalyze · سند طراحی محصول · Track. Analyze. Improve.</footer>
+</body>
+</html>
