@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ورود | SportAnalyze</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#18A8E5; --primary-dark:#0D8BD8; --navy:#0F172A;
+  --success:#16C784; --bg:#F7F9FC; --surface:#FFFFFF; --border:#E5E7EB;
+  --text:#111827; --text-2:#6B7280; --ease:200ms ease-out;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Vazirmatn',system-ui,sans-serif;background:
+  radial-gradient(700px 380px at 80% -10%, rgba(24,168,229,.08), transparent 60%),
+  var(--bg);color:var(--text);font-size:15px;line-height:1.75;min-height:100vh;display:flex;flex-direction:column}
+a{text-decoration:none;color:inherit}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:6px}
+.icon{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.top{padding:20px 24px}
+.logo{display:inline-flex;align-items:center;gap:9px;font-size:18px;font-weight:800;color:var(--navy)}
+.logo b{color:var(--primary-dark)}
+.logo-mark{width:32px;height:32px;border-radius:9px;background:var(--navy);display:flex;align-items:center;justify-content:center}
+.mid{flex:1;display:flex;align-items:center;justify-content:center;padding:24px}
+.box{width:100%;max-width:400px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:34px 30px;box-shadow:0 8px 20px rgba(15,23,42,.06)}
+.box h1{font-size:21px;font-weight:800;margin-bottom:6px;text-align:center}
+.box>p{font-size:13.5px;color:var(--text-2);text-align:center;margin-bottom:26px}
+label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}
+input{width:100%;height:50px;border:1.5px solid var(--border);border-radius:12px;padding:0 16px;font:500 15px 'Vazirmatn';background:var(--surface);color:var(--text);transition:border-color var(--ease);direction:ltr;text-align:left}
+input::placeholder{color:#B4BCC6;text-align:left}
+input:focus{outline:none;border-color:var(--primary-dark);box-shadow:0 0 0 3px rgba(24,168,229,.13)}
+.hint{font-size:12px;color:var(--text-2);margin-top:7px}
+.err{display:none;font-size:12.5px;color:#C23328;margin-top:7px;font-weight:600}
+.err.show{display:block}
+.btn{width:100%;height:50px;border:none;border-radius:12px;background:var(--primary-dark);color:#fff;font:700 15px 'Vazirmatn';cursor:pointer;margin-top:20px;transition:all var(--ease);display:flex;align-items:center;justify-content:center;gap:8px}
+.btn:hover{background:#0B7CC2}
+.btn:active{transform:scale(.98)}
+.otp{display:none;margin-top:20px}
+.otp.show{display:block}
+.otp-in{display:flex;gap:10px;direction:ltr;justify-content:center}
+.otp-in input{width:52px;height:56px;text-align:center;font-size:20px;font-weight:800;padding:0}
+.alt{text-align:center;margin-top:22px;font-size:13px;color:var(--text-2)}
+.alt a{color:var(--primary-dark);font-weight:700}
+.demo{margin-top:18px;text-align:center;background:#FDF6E3;border:1px solid #F5E2AC;border-radius:12px;padding:11px 14px;font-size:12.5px;color:#8A6A00;line-height:1.7}
+.demo a{font-weight:800;color:#6B5300;text-decoration:underline}
+footer{text-align:center;font-size:12.5px;color:var(--text-2);padding:20px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="top">
+  <a href="index.html" class="logo" aria-label="بازگشت به خانه">
+    <span class="logo-mark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 17L9 7l4 6 3-4 5 8" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span>اسپرت<b>آنالیز</b></span>
+  </a>
+</div>
+
+<div class="mid">
+  <div class="box">
+    <h1>ورود / ثبت‌نام</h1>
+    <p>شماره موبایل یا ایمیلت را وارد کن؛ کد تأیید برایت می‌فرستیم.</p>
+
+    <form id="f1">
+      <label for="id1">موبایل یا ایمیل</label>
+      <input id="id1" name="identifier" type="text" inputmode="email" autocomplete="username" placeholder="0912… / you@email.com" required>
+      <p class="hint">با ورود، قوانین و حریم خصوصی را می‌پذیری.</p>
+      <p class="err" id="e1">لطفاً شماره موبایل یا ایمیل معتبر وارد کن.</p>
+      <button class="btn" type="submit">دریافت کد تأیید</button>
+    </form>
+
+    <div class="otp" id="otp">
+      <label>کد ۴ رقمی ارسال‌شده</label>
+      <div class="otp-in">
+        <input type="text" inputmode="numeric" maxlength="1" aria-label="رقم اول">
+        <input type="text" inputmode="numeric" maxlength="1" aria-label="رقم دوم">
+        <input type="text" inputmode="numeric" maxlength="1" aria-label="رقم سوم">
+        <input type="text" inputmode="numeric" maxlength="1" aria-label="رقم چهارم">
+      </div>
+      <button class="btn" id="verify" type="button">ورود
+        <svg class="icon" viewBox="0 0 24 24"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+      </button>
+    </div>
+
+    <div class="demo">نسخهٔ نمایشی — هر کدی وارد کنی وارد می‌شوی، یا مستقیم <a href="app.html">دموی داشبورد</a> را ببین.</div>
+    <p class="alt">حساب نداری؟ همین فرم ثبت‌نامت هم هست.</p>
+  </div>
+</div>
+
+<footer>© ۱۴۰۵ اسپرت‌آنالیز · Track. Analyze. Improve.</footer>
+
+<script>
+const f1=document.getElementById('f1'),e1=document.getElementById('e1'),otp=document.getElementById('otp');
+f1.addEventListener('submit',ev=>{
+  ev.preventDefault();
+  const v=document.getElementById('id1').value.trim();
+  const ok=/^09\d{9}$/.test(v)||/^\S+@\S+\.\S+$/.test(v);
+  e1.classList.toggle('show',!ok);
+  if(!ok){document.getElementById('id1').focus();return;}
+  f1.querySelector('.btn').style.display='none';
+  otp.classList.add('show');
+  otp.querySelector('input').focus();
+});
+const ins=[...otp.querySelectorAll('.otp-in input')];
+ins.forEach((i,idx)=>i.addEventListener('input',()=>{
+  if(i.value&&idx<ins.length-1)ins[idx+1].focus();
+}));
+document.getElementById('verify').addEventListener('click',()=>location.href='app.html');
+</script>
+</body>
+</html>
