@@ -68,59 +68,55 @@ h3{font-size:19px;font-weight:700}
 .mobile-menu-panel a{padding:13px 16px;border-radius:11px;font-weight:600;color:var(--text);min-height:44px}
 .mobile-menu-panel a:hover{background:var(--bg)}
 
-/* ===== Hero ===== */
-.hero{padding:150px 0 0;background:
-  radial-gradient(900px 420px at 85% -10%, rgba(24,168,229,.08), transparent 60%),
-  radial-gradient(700px 380px at 10% 0%, rgba(22,199,132,.05), transparent 55%),
-  var(--surface);overflow:hidden}
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;padding-bottom:96px}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r-pill);padding:6px 16px;font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:26px}
-.hero-badge i{width:7px;height:7px;border-radius:50%;background:var(--success);font-style:normal;animation:pulse 2.4s infinite}
+/* ===== Fullscreen hero slider ===== */
+.hero-slider{position:relative;height:100svh;min-height:540px;background:var(--navy);overflow:hidden}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1s ease;z-index:1;display:block;cursor:pointer}
+.slide.on{opacity:1;z-index:2}
+.slide img{width:100%;height:100%;object-fit:cover}
+.slide.on img{animation:kenburns 6.5s ease-out forwards}
+@keyframes kenburns{from{transform:scale(1.07)}to{transform:scale(1)}}
+.slide::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,23,42,.6) 0%,rgba(15,23,42,.12) 42%,rgba(15,23,42,.78) 100%)}
+.hs-content{position:absolute;inset-inline:0;bottom:0;z-index:5;pointer-events:none;padding:0 0 92px;color:#fff}
+.hs-content .container{display:flex;flex-direction:column;align-items:flex-start}
+.hs-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:var(--r-pill);padding:5px 15px;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.9);backdrop-filter:blur(8px);margin-bottom:18px}
+.hs-badge i{width:7px;height:7px;border-radius:50%;background:var(--success);font-style:normal;animation:pulse 2.4s infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(22,199,132,.45)}50%{box-shadow:0 0 0 6px rgba(22,199,132,0)}}
-.hero .sub{margin:20px 0 34px;font-size:18px;max-width:480px}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
-.hero-trust{display:flex;gap:24px;margin:34px 0 0;flex-wrap:wrap}
-.hero-trust div{font-size:13.5px;color:var(--text-2);display:flex;align-items:center;gap:7px}
-.hero-trust .icon{width:16px;height:16px;stroke:var(--success)}
+.hs-content h1{color:#fff;text-shadow:0 2px 24px rgba(15,23,42,.45)}
+.hs-content .sub{color:rgba(255,255,255,.82);margin:14px 0 28px;font-size:17.5px;max-width:520px;text-shadow:0 1px 12px rgba(15,23,42,.4)}
+.hs-actions{display:flex;gap:12px;flex-wrap:wrap;pointer-events:auto}
+.btn-glass{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.4);backdrop-filter:blur(8px)}
+.btn-glass:hover{background:rgba(255,255,255,.24)}
+.hs-cap{position:absolute;bottom:30px;inset-inline-start:0;z-index:6;pointer-events:none;width:100%}
+.hs-cap .container{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.hs-cap-chip{display:inline-flex;align-items:center;gap:9px;background:rgba(15,23,42,.55);border:1px solid rgba(255,255,255,.22);border-radius:var(--r-pill);padding:8px 18px;font-size:13px;font-weight:700;color:#fff;backdrop-filter:blur(8px);transition:opacity .4s}
+.hs-cap-chip .icon{width:15px;height:15px}
+.hs-dots{display:flex;gap:8px;pointer-events:auto}
+.hs-dots button{width:34px;height:5px;border-radius:99px;border:none;background:rgba(255,255,255,.32);cursor:pointer;transition:background var(--ease);padding:0;position:relative}
+.hs-dots button::before{content:'';position:absolute;inset:-10px 0}
+.hs-dots button.on{background:#fff}
+.hs-scroll{position:absolute;bottom:88px;inset-inline-end:24px;z-index:6;color:rgba(255,255,255,.7);animation:bob 3s ease-in-out infinite;pointer-events:none}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 
-/* ===== Hero visual (animated) ===== */
-.hviz{position:relative;z-index:1}
-.hv-blob{position:absolute;border-radius:50%;filter:blur(64px);opacity:.55;z-index:0;pointer-events:none}
-.hv-blob.b1{width:340px;height:340px;background:rgba(24,168,229,.22);top:-70px;inset-inline-end:-60px;animation:drift 16s ease-in-out infinite alternate}
-.hv-blob.b2{width:260px;height:260px;background:rgba(22,199,132,.16);bottom:-60px;inset-inline-start:-40px;animation:drift 13s 1s ease-in-out infinite alternate-reverse}
-@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(26px,20px) scale(1.08)}}
-.hv-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--sh-md)}
-.hv-main{position:relative;z-index:2;padding:22px 22px 18px}
-.hv-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.hv-title{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:700}
-.hv-title .dot{width:8px;height:8px;border-radius:50%;background:var(--primary)}
-.hv-live{font-size:11px;font-weight:700;color:#0E9F68;background:#E8F9F1;border-radius:var(--r-pill);padding:3px 11px}
-.hv-chart{width:100%;height:auto;display:block}
-.hv-line{fill:none;stroke:var(--primary-dark);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:620;stroke-dashoffset:620;animation:draw 1.8s .5s cubic-bezier(.4,0,.2,1) forwards}
-.hv-line2{fill:none;stroke:var(--success);stroke-width:2;stroke-linecap:round;stroke-dasharray:620;stroke-dashoffset:620;animation:draw 1.8s .9s cubic-bezier(.4,0,.2,1) forwards;opacity:.85}
-.hv-area{fill:url(#hvfill);opacity:0;animation:fadein .8s 1.6s ease-out forwards}
-@keyframes draw{to{stroke-dashoffset:0}}
-@keyframes fadein{to{opacity:1}}
-.hv-pt{fill:var(--surface);stroke:var(--primary-dark);stroke-width:2.5;opacity:0;animation:fadein .4s 2s ease-out forwards}
-.hv-stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border);margin-top:16px;padding-top:14px;text-align:center}
-.hv-stats div{border-inline-start:1px solid var(--border);padding:2px 8px}
-.hv-stats div:first-child{border-inline-start:none}
-.hv-stats b{display:block;font-size:17px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
-.hv-stats span{font-size:11px;color:var(--text-2)}
-.hv-float{position:absolute;display:flex;gap:12px;align-items:center;padding:13px 18px;z-index:3;animation:bob 5.5s ease-in-out infinite}
-.hv-speed{top:-30px;inset-inline-start:-14px;animation-delay:.6s}
-.hv-score{bottom:-32px;inset-inline-end:-12px}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
-.hv-ic{width:38px;height:38px;border-radius:11px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--primary-dark)}
-.hv-ic .icon{width:18px;height:18px}
-.hv-float b{display:block;font-size:16px;font-weight:800;color:var(--navy);line-height:1.4;font-variant-numeric:tabular-nums}
-.hv-float small{font-size:11.5px;color:var(--text-2)}
-.hv-up{color:#0E9F68;font-size:11px;font-weight:700}
-.hv-ring{width:44px;height:44px;transform:rotate(-90deg)}
-.hv-ring .bgc{fill:none;stroke:var(--border);stroke-width:4}
-.hv-ring .fgc{fill:none;stroke:var(--success);stroke-width:4;stroke-linecap:round;stroke-dasharray:113;stroke-dashoffset:113;animation:ring 1.4s 1s cubic-bezier(.4,0,.2,1) forwards}
-@keyframes ring{to{stroke-dashoffset:25}}
-.hero-base{border-top:1px solid var(--border);background:var(--bg)}
+/* ===== Live weather strip ===== */
+.wx{background:var(--bg);border-bottom:1px solid var(--border);padding:44px 0 48px}
+.wx-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.wx-head h2{font-size:17px;font-weight:800;display:flex;align-items:center;gap:9px}
+.wx-head h2 .live{width:8px;height:8px;border-radius:50%;background:var(--success);animation:pulse 2.4s infinite}
+.wx-head span{font-size:12.5px;color:var(--text-2)}
+.wx-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.wx-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px 18px;display:flex;gap:13px;align-items:center;min-height:88px;transition:all var(--ease)}
+.wx-card:hover{box-shadow:var(--sh-sm);transform:translateY(-2px)}
+.wx-ic{width:44px;height:44px;border-radius:12px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--primary-dark);flex-shrink:0}
+.wx-ic .icon{width:23px;height:23px}
+.wx-card b{display:block;font-size:14px;font-weight:700}
+.wx-card small{font-size:11.5px;color:var(--text-2);display:block}
+.wx-t{margin-inline-start:auto;text-align:center;flex-shrink:0}
+.wx-t b{font-size:21px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
+.wx-t small{font-size:10.5px}
+.wx-card.skel{position:relative;overflow:hidden}
+.wx-card.skel::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.75) 50%,transparent 70%);animation:shimmer 1.4s infinite}
+@keyframes shimmer{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+.skel-b{background:var(--border);border-radius:6px;height:12px;width:70%}
 
 /* ===== KPI strip ===== */
 .kpis{padding:48px 0;border-bottom:1px solid var(--border);background:var(--bg)}
@@ -224,11 +220,6 @@ footer{border-top:1px solid var(--border);background:var(--surface);padding:64px
 /* ===== Reveal + stagger ===== */
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .55s cubic-bezier(.4,0,.2,1),transform .55s cubic-bezier(.4,0,.2,1)}
 .reveal.vis{opacity:1;transform:none}
-.hero-copy .reveal:nth-child(2){transition-delay:.06s}
-.hero-copy .reveal:nth-child(3){transition-delay:.12s}
-.hero-copy .reveal:nth-child(4){transition-delay:.18s}
-.hero-copy .reveal:nth-child(5){transition-delay:.24s}
-.hviz.reveal{transition-delay:.2s}
 .features-grid .fcard:nth-child(2){transition-delay:.09s}
 .features-grid .fcard:nth-child(3){transition-delay:.18s}
 .hiw-steps .hstep:nth-child(2){transition-delay:.08s}
@@ -245,37 +236,30 @@ footer{border-top:1px solid var(--border);background:var(--surface);padding:64px
   .video-wrap{grid-template-columns:1fr;gap:40px}
   .foot-grid{grid-template-columns:1fr 1fr}
   h1{font-size:40px}h2{font-size:29px}
-  .hero-grid{grid-template-columns:1fr;gap:24px;padding-bottom:72px}
-  .hviz{margin-top:44px;max-width:560px}
-  .hv-speed{top:-26px;inset-inline-start:0}
-  .hv-score{bottom:-26px;inset-inline-end:0}
+  .wx-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:759px){
   .nav-links,.nav-cta .btn-ghost{display:none}
   .menu-btn{display:flex}
-  h1{font-size:31px}h2{font-size:24px}
-  .hero{padding-top:118px}
-  .hero .sub{font-size:16px}
-  .hviz{margin-top:40px}
-  .hv-float{padding:10px 14px}
-  .hv-float b{font-size:14px}
-  .hv-stats b{font-size:15px}
-  .kpi-grid{grid-template-columns:1fr 1fr;gap:24px 0}
-  .kpi:nth-child(3){border-inline-start:none}
+  h1{font-size:30px}h2{font-size:24px}
+  .hero-slider{min-height:480px}
+  .hs-content{padding-bottom:104px}
+  .hs-content .sub{font-size:15px}
+  .hs-cap-chip{font-size:11.5px;padding:7px 14px}
+  .wx-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .wx-card{padding:12px 14px;min-height:76px;gap:10px}
+  .wx-t b{font-size:18px}
   .features-grid,.plans,.hiw-steps{grid-template-columns:1fr}
   section{padding:64px 0}
   .bottom-nav{display:grid}
   footer{padding-bottom:120px}
   .cta-box{padding:52px 24px}
-  .showcase{padding:0 16px}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important;animation:none!important}
   html{scroll-behavior:auto}
   .reveal{opacity:1;transform:none}
-  .hv-line,.hv-line2{stroke-dashoffset:0}
-  .hv-area,.hv-pt{opacity:1}
-  .hv-ring .fgc{stroke-dashoffset:25}
+  .slide{transition:none}
 }
 </style>
 </head>
@@ -318,78 +302,60 @@ footer{border-top:1px solid var(--border);background:var(--surface);padding:64px
 
 <main>
 <!-- ================= Hero ================= -->
-<section class="hero" style="padding-bottom:0" aria-labelledby="hero-title">
-  <div class="container hero-grid">
-    <div class="hero-copy">
-      <span class="hero-badge reveal"><i></i> بیش از ۱٬۲۵۰ آنالیز ویدیویی انجام شده</span>
-      <h1 id="hero-title" class="reveal">عملکردت را با دادهٔ دقیق بهینه کن</h1>
-      <p class="sub reveal">آنالیز ویدیویی تکنیک برای اسکی و دوچرخه‌سواری. ویدیوی تمرینت را بفرست و بازخورد فریم‌به‌فریم مربی را دریافت کن.</p>
-      <div class="hero-actions reveal">
+<section class="hero-slider" id="slider" aria-label="معرفی اسپرت‌آنالیز">
+  <a class="slide on" href="#features" data-cap="آنالیز تکنیک اسکی — برای ورود کلیک کن">
+    <img src="ski-analysis.jpg" alt="آنالیز پیچ اسکی‌باز مسابقه‌ای با نمایش زاویهٔ لبه و نقشهٔ فشار" fetchpriority="high">
+  </a>
+  <a class="slide" href="#features" data-cap="متریک‌های دوچرخه‌سواری — برای ورود کلیک کن">
+    <img src="cycling-analysis.jpg" alt="آنالیز پیچ دوچرخه‌سوار با نمایش توان و کدنس" loading="lazy">
+  </a>
+  <a class="slide" href="#videos" data-cap="نمونهٔ خروجی آنالیز — برای تماشا کلیک کن">
+    <img src="run-demo.jpg" alt="آنالیز بیومکانیک دونده در استادیوم" loading="lazy">
+  </a>
+  <a class="slide" href="app-new.html" data-cap="شروع اولین آنالیز — برای شروع کلیک کن">
+    <img src="run-analysis.jpg" alt="آنالیز نقشهٔ فشار کف پا و نیروی عکس‌العمل زمین" loading="lazy">
+  </a>
+
+  <div class="hs-content">
+    <div class="container">
+      <span class="hs-badge"><i></i> بیش از ۱٬۲۵۰ آنالیز ویدیویی انجام شده</span>
+      <h1>عملکردت را با دادهٔ دقیق بهینه کن</h1>
+      <p class="sub">آنالیز ویدیویی تکنیک برای اسکی و دوچرخه‌سواری. ویدیوی تمرینت را بفرست و بازخورد فریم‌به‌فریم مربی را دریافت کن.</p>
+      <div class="hs-actions">
         <a href="app-new.html" class="btn btn-primary">شروع کنید — رایگان</a>
-        <a href="app.html" class="btn btn-ghost">مشاهدهٔ دموی اپ</a>
-      </div>
-      <div class="hero-trust reveal">
-        <div><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg> اولین آنالیز رایگان</div>
-        <div><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg> بازخورد در ۴۸ ساعت</div>
-        <div><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg> بدون تجهیزات خاص</div>
-      </div>
-    </div>
-
-    <div class="hviz reveal" aria-hidden="true">
-      <span class="hv-blob b1"></span>
-      <span class="hv-blob b2"></span>
-
-      <div class="hv-card hv-main">
-        <div class="hv-head">
-          <span class="hv-title"><span class="dot"></span>آنالیز پیچ — پیست دیزین</span>
-          <span class="hv-live">در حال تحلیل</span>
-        </div>
-        <svg class="hv-chart" viewBox="0 0 440 190" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="hvfill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#18A8E5" stop-opacity=".14"/>
-              <stop offset="1" stop-color="#18A8E5" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <g stroke="#EDF1F5" stroke-width="1">
-            <path d="M0 40h440M0 80h440M0 120h440M0 160h440"/>
-          </g>
-          <path class="hv-area" d="M10 150C60 140 90 90 140 84C190 78 210 118 260 106C310 94 330 46 380 40L430 34V190H10Z"/>
-          <path class="hv-line" d="M10 150C60 140 90 90 140 84C190 78 210 118 260 106C310 94 330 46 380 40L430 34"/>
-          <path class="hv-line2" d="M10 168C70 164 100 128 150 124C200 120 230 146 280 138C330 130 360 96 430 88"/>
-          <circle class="hv-pt" cx="380" cy="40" r="5"/>
-          <circle class="hv-pt" cx="260" cy="106" r="5" style="animation-delay:2.2s"/>
-        </svg>
-        <div class="hv-stats">
-          <div><b>۷۰.۸°</b><span>زاویهٔ لبه</span></div>
-          <div><b>۸۴.۷</b><span>سرعت km/h</span></div>
-          <div><b>۲.۱G</b><span>نیروی پیچ</span></div>
-        </div>
-      </div>
-
-      <div class="hv-card hv-float hv-speed">
-        <span class="hv-ic"><svg class="icon" viewBox="0 0 24 24"><path d="m13 3-9 11h7l-1 7 9-11h-7l1-7Z"/></svg></span>
-        <span><b>۷۲ km/h</b><small>سرعت اوج · <span class="hv-up">↑ ۸٪</span></small></span>
-      </div>
-
-      <div class="hv-card hv-float hv-score">
-        <svg class="hv-ring" viewBox="0 0 44 44"><circle class="bgc" cx="22" cy="22" r="18"/><circle class="fgc" cx="22" cy="22" r="18"/></svg>
-        <span><b>۷.۸ از ۱۰</b><small>امتیاز تکنیک</small></span>
+        <a href="app.html" class="btn btn-glass">مشاهدهٔ دموی اپ</a>
       </div>
     </div>
   </div>
-  <div class="hero-base">
-    <!-- KPI strip -->
-    <div class="kpis" aria-label="آمار پلتفرم">
-      <div class="container kpi-grid">
-        <div class="kpi"><div class="num"><span class="count" data-to="72">۰</span> <small>km/h</small></div><div class="lbl">سرعت اوج ثبت‌شده</div></div>
-        <div class="kpi"><div class="num"><span class="count" data-to="158">۰</span> <small>bpm</small></div><div class="lbl">میانگین ضربان تمرین</div></div>
-        <div class="kpi"><div class="num"><span class="count" data-to="320">۰</span> <small>W</small></div><div class="lbl">توان خروجی میانگین</div></div>
-        <div class="kpi"><div class="num"><span class="count" data-to="1250">۰</span><small>+</small></div><div class="lbl">آنالیز ویدیویی انجام‌شده</div></div>
+
+  <div class="hs-cap">
+    <div class="container">
+      <span class="hs-cap-chip" id="hsCap"><svg class="icon" viewBox="0 0 24 24"><path d="M19 12H5m7-7-7 7 7 7"/></svg>آنالیز تکنیک اسکی — برای ورود کلیک کن</span>
+      <div class="hs-dots" role="tablist" aria-label="اسلایدها">
+        <button class="on" type="button" aria-label="اسلاید ۱"></button>
+        <button type="button" aria-label="اسلاید ۲"></button>
+        <button type="button" aria-label="اسلاید ۳"></button>
+        <button type="button" aria-label="اسلاید ۴"></button>
       </div>
     </div>
   </div>
 </section>
+
+<!-- ===== Live weather ===== -->
+<div class="wx" aria-label="آب‌وهوای زندهٔ پیست‌ها و مسیرها">
+  <div class="container">
+    <div class="wx-head">
+      <h2><span class="live"></span>آب‌وهوای زندهٔ پیست‌ها و مسیرها</h2>
+      <span id="wxNote">در حال دریافت…</span>
+    </div>
+    <div class="wx-grid" id="wxGrid">
+      <div class="wx-card skel"><span class="wx-ic"></span><span style="flex:1"><span class="skel-b"></span><span class="skel-b" style="width:45%;margin-top:8px"></span></span></div>
+      <div class="wx-card skel"><span class="wx-ic"></span><span style="flex:1"><span class="skel-b"></span><span class="skel-b" style="width:45%;margin-top:8px"></span></span></div>
+      <div class="wx-card skel"><span class="wx-ic"></span><span style="flex:1"><span class="skel-b"></span><span class="skel-b" style="width:45%;margin-top:8px"></span></span></div>
+      <div class="wx-card skel"><span class="wx-ic"></span><span style="flex:1"><span class="skel-b"></span><span class="skel-b" style="width:45%;margin-top:8px"></span></span></div>
+    </div>
+  </div>
+</div>
 
 <!-- ================= Features ================= -->
 <section id="features" aria-labelledby="features-title">
@@ -615,17 +581,77 @@ mm.addEventListener('click',e=>{if(e.target===mm||e.target.tagName==='A'){mm.cla
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-const faNum=n=>n.toLocaleString('fa-IR');
-const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const cio=new IntersectionObserver(es=>es.forEach(e=>{
-  if(!e.isIntersecting)return;cio.unobserve(e.target);
-  const el=e.target,to=+el.dataset.to;
-  if(reduced){el.textContent=faNum(to);return;}
-  const t0=performance.now(),dur=800;
-  const tick=t=>{const p=Math.min((t-t0)/dur,1),v=Math.round(to*(1-Math.pow(1-p,3)));el.textContent=faNum(v);if(p<1)requestAnimationFrame(tick);};
-  requestAnimationFrame(tick);
-}),{threshold:.6});
-document.querySelectorAll('.count').forEach(el=>cio.observe(el));
+/* ===== Hero slider (Filimo-style) ===== */
+const slides=[...document.querySelectorAll('.slide')],
+      dots=[...document.querySelectorAll('.hs-dots button')],
+      cap=document.getElementById('hsCap'),
+      slider=document.getElementById('slider'),
+      reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let si=0,timer=null;
+const go=n=>{
+  si=(n+slides.length)%slides.length;
+  slides.forEach((s,k)=>s.classList.toggle('on',k===si));
+  dots.forEach((d,k)=>d.classList.toggle('on',k===si));
+  cap.style.opacity=0;
+  setTimeout(()=>{cap.lastChild.textContent=slides[si].dataset.cap;cap.style.opacity=1;},250);
+};
+const play=()=>{if(reduced||timer)return;timer=setInterval(()=>go(si+1),5000);};
+const stop=()=>{clearInterval(timer);timer=null;};
+dots.forEach((d,k)=>d.addEventListener('click',()=>{stop();go(k);play();}));
+slider.addEventListener('mouseenter',stop);
+slider.addEventListener('mouseleave',play);
+document.addEventListener('visibilitychange',()=>document.hidden?stop():play());
+play();
+
+/* ===== Live weather (Open-Meteo, no key) ===== */
+const SPOTS=[
+  {n:'دیزین',d:'پیست اسکی · البرز',la:36.04,lo:51.41},
+  {n:'شمشک',d:'پیست اسکی · البرز',la:36.01,lo:51.50},
+  {n:'دربندسر',d:'پیست اسکی · البرز',la:36.05,lo:51.52},
+  {n:'توچال',d:'پیست اسکی · تهران',la:35.88,lo:51.42},
+  {n:'الوارس',d:'پیست اسکی · اردبیل',la:38.17,lo:47.83},
+  {n:'شامونی',d:'پیست اسکی · فرانسه',la:45.92,lo:6.87},
+  {n:'زرمات',d:'پیست اسکی · سوئیس',la:46.02,lo:7.75},
+  {n:'ویسلر',d:'پیست اسکی · کانادا',la:50.11,lo:-122.95},
+  {n:'جادهٔ چالوس',d:'مسیر دوچرخه · ایران',la:36.16,lo:51.30},
+  {n:'کویر مرنجاب',d:'مسیر دوچرخه · کاشان',la:34.30,lo:51.83}
+];
+const WMAP=[
+  [[0],'صاف و آفتابی','sun'],[[1,2],'کمی ابری','psun'],[[3],'ابری','cloud'],
+  [[45,48],'مه‌آلود','fog'],[[51,53,55,56,57,61,63,65,66,67,80,81,82],'بارانی','rain'],
+  [[71,73,75,77,85,86],'برفی','snow'],[[95,96,99],'طوفانی','storm']
+];
+const WICON={
+  sun:'<circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
+  psun:'<circle cx="9" cy="9" r="3.5"/><path d="M9 2.5v2M2.5 9h2M4.5 4.5 6 6M17.5 21H8a4 4 0 1 1 .6-7.9A5 5 0 0 1 18 15a3 3 0 0 1-.5 6Z"/>',
+  cloud:'<path d="M17.5 19H7a4.5 4.5 0 1 1 .8-8.9A5.5 5.5 0 0 1 18.5 12 3.5 3.5 0 0 1 17.5 19Z"/>',
+  fog:'<path d="M4 9h16M2 13h20M5 17h14"/>',
+  rain:'<path d="M17.5 15H7a4.5 4.5 0 1 1 .8-8.9A5.5 5.5 0 0 1 18.5 8 3.5 3.5 0 0 1 17.5 15Z"/><path d="M8 18.5v2M12 18.5v2M16 18.5v2"/>',
+  snow:'<path d="M17.5 14H7a4.5 4.5 0 1 1 .8-8.9A5.5 5.5 0 0 1 18.5 7 3.5 3.5 0 0 1 17.5 14Z"/><path d="M8 17.5h.01M12 19.5h.01M16 17.5h.01M10 21h.01M14 21.5h.01"/>',
+  storm:'<path d="M17.5 13H7a4.5 4.5 0 1 1 .8-8.9A5.5 5.5 0 0 1 18.5 6 3.5 3.5 0 0 1 17.5 13Z"/><path d="m12.5 14-2.5 4h3l-2.5 4"/>'
+};
+const fa=n=>Math.round(n).toLocaleString('fa-IR');
+const wlabel=c=>{for(const[cs,l,i]of WMAP)if(cs.includes(c))return[l,i];return['—','cloud'];};
+const wxCard=(s,t,c,w)=>{
+  const[l,ic]=wlabel(c);
+  return `<div class="wx-card"><span class="wx-ic"><svg class="icon" viewBox="0 0 24 24">${WICON[ic]}</svg></span><span><b>${s.n}</b><small>${s.d} · ${l}</small><small>باد ${fa(w)} km/h</small></span><span class="wx-t"><b>${fa(t)}°</b><small>سانتی‌گراد</small></span></div>`;
+};
+(async()=>{
+  const grid=document.getElementById('wxGrid'),note=document.getElementById('wxNote');
+  const picks=[...SPOTS].sort(()=>Math.random()-.5).slice(0,4);
+  try{
+    const u=`https://api.open-meteo.com/v1/forecast?latitude=${picks.map(p=>p.la).join(',')}&longitude=${picks.map(p=>p.lo).join(',')}&current=temperature_2m,weather_code,wind_speed_10m`;
+    const r=await fetch(u,{signal:AbortSignal.timeout(8000)});
+    const j=await r.json();
+    const arr=Array.isArray(j)?j:[j];
+    grid.innerHTML=picks.map((p,k)=>wxCard(p,arr[k].current.temperature_2m,arr[k].current.weather_code,arr[k].current.wind_speed_10m)).join('');
+    note.textContent='به‌روزرسانی لحظه‌ای · Open-Meteo';
+  }catch(e){
+    const fb=[[picks[0],-3,71,14],[picks[1],-1,2,9],[picks[2],4,0,6],[picks[3],11,1,12]];
+    grid.innerHTML=fb.map(([p,t,c,w])=>wxCard(p,t,c,w)).join('');
+    note.textContent='دادهٔ نمونه (اتصال برقرار نشد)';
+  }
+})();
 </script>
 </body>
 </html>
