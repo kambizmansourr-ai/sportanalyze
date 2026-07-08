@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>آنالیز جدید | SportAnalyze</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#18A8E5; --primary-dark:#0D8BD8; --navy:#0F172A;
+  --success:#16C784; --warning:#F7B500; --danger:#F04438;
+  --bg:#F7F9FC; --surface:#FFFFFF; --border:#E5E7EB;
+  --text:#111827; --text-2:#6B7280;
+  --r-md:12px; --r-lg:18px; --r-pill:999px;
+  --sh-sm:0 2px 8px rgba(15,23,42,.05); --sh-md:0 8px 20px rgba(15,23,42,.07);
+  --ease:200ms ease-out;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.75}
+img,svg{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:6px}
+.icon{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 26px;border:none;border-radius:12px;font:600 15px 'Vazirmatn',sans-serif;cursor:pointer;transition:all var(--ease)}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--primary-dark);color:#fff}
+.btn-primary:hover{background:#0B7CC2}
+.btn-primary:disabled{opacity:.45;cursor:not-allowed}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-ghost:hover{background:var(--surface)}
+
+.topnav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 0}
+.topnav .wrap{display:flex;align-items:center;justify-content:space-between}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+.logo{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800;color:var(--navy)}
+.logo b{color:var(--primary-dark)}
+.logo-mark{width:30px;height:30px;border-radius:8px;background:var(--navy);display:flex;align-items:center;justify-content:center}
+.close{width:42px;height:42px;border-radius:11px;border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--text-2)}
+.close:hover{background:var(--bg)}
+
+/* Stepper */
+.stepper{display:flex;align-items:center;gap:0;margin:28px 0 8px}
+.st{flex:1;text-align:center;position:relative;font-size:11.5px;color:var(--text-2);font-weight:600}
+.st .b{width:30px;height:30px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 7px;font-size:12.5px;font-weight:800;color:var(--text-2);transition:all var(--ease);position:relative;z-index:2}
+.st::before{content:'';position:absolute;top:15px;inset-inline-start:-50%;width:100%;height:2px;background:var(--border);z-index:1}
+.st:first-child::before{display:none}
+.st.done .b{background:var(--success);border-color:var(--success);color:#fff}
+.st.done::before{background:var(--success)}
+.st.cur .b{border-color:var(--primary-dark);color:var(--primary-dark);box-shadow:0 0 0 4px rgba(24,168,229,.15)}
+.st.cur{color:var(--primary-dark)}
+.st.cur::before{background:var(--success)}
+
+/* Panels */
+.panel{display:none;animation:slidein .35s cubic-bezier(.4,0,.2,1)}
+.panel.on{display:block}
+@keyframes slidein{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;margin-top:20px}
+.card h1{font-size:19px;font-weight:800;margin-bottom:4px}
+.card>p{font-size:13.5px;color:var(--text-2);margin-bottom:20px}
+
+/* Step 1: sport */
+.sports{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sport{border:1.5px solid var(--border);border-radius:var(--r-lg);padding:22px 18px;text-align:center;cursor:pointer;transition:all var(--ease);background:var(--surface)}
+.sport:hover{border-color:#C9D2DC;transform:translateY(-2px)}
+.sport.sel{border-color:var(--primary-dark);background:#F4FBFE;box-shadow:0 0 0 3px rgba(24,168,229,.12)}
+.sport .ic{width:52px;height:52px;border-radius:14px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;color:var(--primary-dark)}
+.sport .ic .icon{width:25px;height:25px}
+.sport b{font-size:15px;display:block}
+.sport span{font-size:12px;color:var(--text-2)}
+
+/* Step 2: guide */
+.guide{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.g{border-radius:var(--r-lg);padding:16px;border:1.5px solid}
+.g.ok{border-color:#B8ECD4;background:#F2FBF7}
+.g.no{border-color:#F6C9C4;background:#FDF4F3}
+.g .h{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13.5px;margin-bottom:8px}
+.g.ok .h{color:#0E9F68}.g.no .h{color:#C23328}
+.g ul{list-style:none;font-size:12.5px;color:var(--text-2);display:flex;flex-direction:column;gap:5px}
+.g li{display:flex;gap:7px;align-items:flex-start}
+.g li .icon{width:14px;height:14px;margin-top:4px}
+.g.ok li .icon{stroke:#0E9F68}.g.no li .icon{stroke:#C23328}
+.checkrow{display:flex;gap:10px;align-items:center;background:var(--bg);border:1px solid var(--border);border-radius:var(--r-md);padding:13px 16px;font-size:13.5px;cursor:pointer;user-select:none}
+.checkrow input{width:18px;height:18px;accent-color:var(--primary-dark)}
+
+/* Step 3: upload */
+.drop{border:2px dashed #BEE4F8;border-radius:var(--r-lg);background:#F7FCFE;padding:38px 20px;text-align:center;cursor:pointer;transition:all var(--ease)}
+.drop:hover{border-color:var(--primary);background:#F0F9FE}
+.drop .ic{width:56px;height:56px;border-radius:16px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;color:var(--primary-dark)}
+.drop b{font-size:15px;display:block;color:var(--primary-dark)}
+.drop span{font-size:12.5px;color:var(--text-2)}
+.upfile{display:none;margin-top:14px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r-md);padding:13px 16px}
+.upfile.show{display:block}
+.upfile .fr{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600}
+.upbar{height:6px;border-radius:99px;background:var(--border);overflow:hidden;margin-top:10px}
+.upbar i{display:block;height:100%;width:0;border-radius:99px;background:var(--primary-dark);transition:width .25s linear}
+.upok{color:#0E9F68;font-size:12px;font-weight:700;display:none}
+
+/* Step 4: plan */
+.plansel{display:flex;flex-direction:column;gap:10px}
+.pl{display:flex;align-items:center;gap:14px;border:1.5px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;cursor:pointer;transition:all var(--ease);background:var(--surface)}
+.pl:hover{border-color:#C9D2DC}
+.pl.sel{border-color:var(--primary-dark);background:#F4FBFE;box-shadow:0 0 0 3px rgba(24,168,229,.12)}
+.pl b{display:block;font-size:14.5px}
+.pl span{font-size:12.5px;color:var(--text-2)}
+.pl .tag{margin-inline-start:auto;border-radius:var(--r-pill);padding:3px 13px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.t-blue{background:#E8F6FD;color:var(--primary-dark)}
+.t-gray{background:#F3F4F6;color:var(--text-2)}
+
+/* Success */
+.success{text-align:center;padding:34px 20px}
+.success .big{width:76px;height:76px;border-radius:50%;background:#E8F9F1;display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+.success .big .icon{width:36px;height:36px;stroke:var(--success);stroke-width:2.5}
+.success h1{font-size:20px;font-weight:800;margin-bottom:6px}
+.success p{font-size:13.5px;color:var(--text-2);max-width:380px;margin:0 auto 24px}
+
+.nav-btns{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
+@media(max-width:600px){
+  .sports,.guide{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="wrap">
+    <a href="app.html" class="logo"><span class="logo-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 17L9 7l4 6 3-4 5 8" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>آنالیز جدید</a>
+    <a href="app.html" class="close" aria-label="بستن و بازگشت به داشبورد"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></a>
+  </div>
+</div>
+
+<div class="wrap">
+  <!-- Stepper -->
+  <div class="stepper" aria-label="مراحل آنالیز جدید">
+    <div class="st cur" data-st="1"><span class="b">۱</span>رشته</div>
+    <div class="st" data-st="2"><span class="b">۲</span>فیلم‌برداری</div>
+    <div class="st" data-st="3"><span class="b">۳</span>آپلود</div>
+    <div class="st" data-st="4"><span class="b">۴</span>انتخاب پلن</div>
+  </div>
+
+  <!-- Step 1 -->
+  <section class="panel on" data-p="1">
+    <div class="card">
+      <h1>کدام رشته را آنالیز کنیم؟</h1>
+      <p>نوع تمرینی که ویدیوی آن را ارسال می‌کنی انتخاب کن.</p>
+      <div class="sports">
+        <button class="sport" data-sport="ski" type="button">
+          <span class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="m4 18 7-4m0 0 6-3.5M11 14l-2.5-4M17 10.5 15 7m2 3.5 3 5.5M6 8a2 2 0 1 0 4 0 2 2 0 0 0-4 0Z"/></svg></span>
+          <b>اسکی</b><span>آنالیز تکنیک، زاویهٔ لبه و خط مسیر</span>
+        </button>
+        <button class="sport" data-sport="cyc" type="button">
+          <span class="ic"><svg class="icon" viewBox="0 0 24 24"><circle cx="6" cy="16.5" r="3.5"/><circle cx="18" cy="16.5" r="3.5"/><path d="M6 16.5 9.5 9h5L18 16.5M9.5 9 8 6h3"/></svg></span>
+          <b>دوچرخه‌سواری</b><span>توان، کدنس و پوزیشن بدن</span>
+        </button>
+      </div>
+      <div class="nav-btns">
+        <span></span>
+        <button class="btn btn-primary" id="n1" type="button" disabled>ادامه</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 2 -->
+  <section class="panel" data-p="2">
+    <div class="card">
+      <h1>راهنمای زاویهٔ فیلم‌برداری</h1>
+      <p>رعایت این سه نکته دقت آنالیز را چند برابر می‌کند.</p>
+      <div class="guide">
+        <div class="g ok">
+          <span class="h"><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>درست</span>
+          <ul>
+            <li><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>از پهلو و هم‌سطح ورزشکار</li>
+            <li><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>فاصلهٔ ۵ تا ۱۰ متر</li>
+            <li><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>نور کافی و دوربین ثابت</li>
+          </ul>
+        </div>
+        <div class="g no">
+          <span class="h"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>نادرست</span>
+          <ul>
+            <li><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>از بالا یا روبه‌رو</li>
+            <li><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>دوربین لرزان یا در حال حرکت</li>
+            <li><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>ورزشکار خیلی دور یا خارج از کادر</li>
+          </ul>
+        </div>
+      </div>
+      <label class="checkrow"><input type="checkbox" id="gcheck"> راهنما را خواندم و ویدیوی من این شرایط را دارد.</label>
+      <div class="nav-btns">
+        <button class="btn btn-ghost" data-back="1" type="button">بازگشت</button>
+        <button class="btn btn-primary" id="n2" type="button" disabled>ادامه</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 3 -->
+  <section class="panel" data-p="3">
+    <div class="card">
+      <h1>ویدیوی تمرین را بارگذاری کن</h1>
+      <p>MP4 یا MOV · حداکثر ۵۰۰ مگابایت · حداقل ۱۰ ثانیه</p>
+      <div class="drop" id="drop" role="button" tabindex="0" aria-label="بارگذاری ویدیو (نمایشی)">
+        <span class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M12 16V4m0 0 -4 4m4-4 4 4M4 20h16"/></svg></span>
+        <b>برای بارگذاری کلیک کن</b>
+        <span>یا فایل را اینجا رها کن (نمایشی)</span>
+      </div>
+      <div class="upfile" id="upfile">
+        <div class="fr">
+          <svg class="icon" viewBox="0 0 24 24" style="stroke:var(--primary-dark)"><rect x="3" y="5" width="13" height="14" rx="3"/><path d="m16 10 5-3v10l-5-3"/></svg>
+          training-dizin.mp4 <span style="color:var(--text-2);font-weight:400">· ۸۴ MB</span>
+          <span class="upok" id="upok" style="margin-inline-start:auto">✓ بارگذاری شد</span>
+        </div>
+        <div class="upbar"><i id="upbar"></i></div>
+      </div>
+      <div class="nav-btns">
+        <button class="btn btn-ghost" data-back="2" type="button">بازگشت</button>
+        <button class="btn btn-primary" id="n3" type="button" disabled>ادامه</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 4 -->
+  <section class="panel" data-p="4">
+    <div class="card">
+      <h1>نوع آنالیز را انتخاب کن</h1>
+      <p>اشتراک سالیانهٔ باشگاه شما فعال است — آنالیز کامل بدون هزینه.</p>
+      <div class="plansel">
+        <button class="pl sel" type="button">
+          <svg class="icon" viewBox="0 0 24 24" style="stroke:var(--primary-dark)"><path d="m12 2 2.9 6.3 6.6.6-5 4.5 1.5 6.6L12 16.5 6 20l1.5-6.6-5-4.5 6.6-.6L12 2Z"/></svg>
+          <span><b>آنالیز کامل</b><span>نکات فریم‌به‌فریم مربی + امتیاز تکنیک + تمرین پیشنهادی</span></span>
+          <span class="tag t-blue">اشتراک باشگاه — رایگان</span>
+        </button>
+        <button class="pl" type="button">
+          <svg class="icon" viewBox="0 0 24 24" style="stroke:var(--text-2)"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 1.5"/></svg>
+          <span><b>آنالیز پایه</b><span>بازخورد کلی و مهم‌ترین نکتهٔ اصلاحی</span></span>
+          <span class="tag t-gray">رایگان</span>
+        </button>
+      </div>
+      <div class="nav-btns">
+        <button class="btn btn-ghost" data-back="3" type="button">بازگشت</button>
+        <button class="btn btn-primary" id="n4" type="button">ثبت و ارسال</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Success -->
+  <section class="panel" data-p="5">
+    <div class="card success">
+      <span class="big"><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+      <h1>ویدیو در صف بررسی قرار گرفت</h1>
+      <p>مربی حداکثر تا ۲۴ ساعت دیگر آنالیز را کامل می‌کند. به‌محض آماده شدن، ایمیل «آنالیز آماده است» برایت ارسال می‌شود.</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <a href="app.html" class="btn btn-primary">بازگشت به داشبورد</a>
+        <a href="videos.html" class="btn btn-ghost">تماشای ویدیوهای آموزشی</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+let cur=1;
+const show=n=>{
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',+p.dataset.p===n));
+  document.querySelectorAll('.st').forEach(s=>{
+    const k=+s.dataset.st;
+    s.classList.toggle('done',k<n);s.classList.toggle('cur',k===n);
+    s.querySelector('.b').textContent=k<n?'✓':'۱۲۳۴'[k-1];
+  });
+  cur=n;scrollTo({top:0,behavior:'smooth'});
+};
+document.querySelectorAll('[data-back]').forEach(b=>b.addEventListener('click',()=>show(+b.dataset.back)));
+
+// Step 1
+document.querySelectorAll('.sport').forEach(s=>s.addEventListener('click',()=>{
+  document.querySelectorAll('.sport').forEach(x=>x.classList.remove('sel'));
+  s.classList.add('sel');document.getElementById('n1').disabled=false;
+}));
+document.getElementById('n1').addEventListener('click',()=>show(2));
+
+// Step 2
+document.getElementById('gcheck').addEventListener('change',e=>document.getElementById('n2').disabled=!e.target.checked);
+document.getElementById('n2').addEventListener('click',()=>show(3));
+
+// Step 3 — simulated upload
+const drop=document.getElementById('drop'),upfile=document.getElementById('upfile'),upbar=document.getElementById('upbar'),upok=document.getElementById('upok'),n3=document.getElementById('n3');
+const startUp=()=>{
+  if(upfile.classList.contains('show'))return;
+  upfile.classList.add('show');
+  let p=0;
+  const t=setInterval(()=>{
+    p=Math.min(p+Math.random()*18+6,100);
+    upbar.style.width=p+'%';
+    if(p>=100){clearInterval(t);upok.style.display='inline';n3.disabled=false;}
+  },220);
+};
+drop.addEventListener('click',startUp);
+drop.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();startUp();}});
+n3.addEventListener('click',()=>show(4));
+
+// Step 4
+document.querySelectorAll('.pl').forEach(p=>p.addEventListener('click',()=>{
+  document.querySelectorAll('.pl').forEach(x=>x.classList.remove('sel'));p.classList.add('sel');
+}));
+document.getElementById('n4').addEventListener('click',()=>show(5));
+</script>
+</body>
+</html>

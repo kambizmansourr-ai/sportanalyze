@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>رزرو کلاس اسکی | SportAnalyze</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#18A8E5; --primary-dark:#0D8BD8; --navy:#0F172A;
+  --success:#16C784; --warning:#F7B500; --danger:#F04438;
+  --bg:#F7F9FC; --surface:#FFFFFF; --border:#E5E7EB;
+  --text:#111827; --text-2:#6B7280;
+  --r-md:12px; --r-lg:18px; --r-pill:999px;
+  --sh-sm:0 2px 8px rgba(15,23,42,.05); --sh-md:0 8px 20px rgba(15,23,42,.07);
+  --ease:200ms ease-out;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.75}
+img,svg{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:6px}
+.icon{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 26px;border:none;border-radius:12px;font:600 15px 'Vazirmatn',sans-serif;cursor:pointer;transition:all var(--ease)}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--primary-dark);color:#fff}
+.btn-primary:hover{background:#0B7CC2}
+.btn-primary:disabled{opacity:.45;cursor:not-allowed}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-ghost:hover{background:var(--surface)}
+
+.topnav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 0}
+.topnav .wrap{display:flex;align-items:center;justify-content:space-between}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+.logo{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800;color:var(--navy)}
+.logo-mark{width:30px;height:30px;border-radius:8px;background:var(--navy);display:flex;align-items:center;justify-content:center}
+.close{width:42px;height:42px;border-radius:11px;border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--text-2)}
+.close:hover{background:var(--bg)}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:22px;margin-top:18px}
+.card h2{font-size:16px;font-weight:800;margin-bottom:14px}
+
+.vipbar{margin-top:20px;display:flex;gap:12px;align-items:center;background:#FDF6E3;border:1px solid #F5E2AC;border-radius:var(--r-lg);padding:14px 18px;font-size:13.5px;color:#7A5C00}
+.vipbar .icon{stroke:#B58400;width:22px;height:22px}
+.vipbar b{color:#5C4600}
+
+/* Coaches */
+.coach{display:flex;align-items:center;gap:14px;border:1.5px solid var(--border);border-radius:var(--r-lg);padding:14px 16px;cursor:pointer;transition:all var(--ease);background:var(--surface);width:100%;text-align:start}
+.coach+.coach{margin-top:10px}
+.coach:hover{border-color:#C9D2DC}
+.coach.sel{border-color:var(--primary-dark);background:#F4FBFE;box-shadow:0 0 0 3px rgba(24,168,229,.12)}
+.coach .av{width:50px;height:50px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;flex-shrink:0}
+.coach .av.g{background:#4C7A9C}
+.coach b{display:block;font-size:14.5px}
+.coach span{font-size:12.5px;color:var(--text-2)}
+.coach .meta{margin-inline-start:auto;text-align:center;flex-shrink:0}
+.coach .meta b{font-size:13.5px;color:var(--navy)}
+.star{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:700;color:#B58400}
+.star svg{width:13px;height:13px;fill:#F7B500;stroke:none}
+
+/* Days + slots */
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.days::-webkit-scrollbar{display:none}
+.day{min-width:76px;border:1.5px solid var(--border);border-radius:var(--r-md);padding:10px 6px;text-align:center;cursor:pointer;transition:all var(--ease);background:var(--surface);font-size:12px;color:var(--text-2)}
+.day b{display:block;font-size:15px;color:var(--text);font-weight:800}
+.day:hover{border-color:#C9D2DC}
+.day.sel{border-color:var(--primary-dark);background:#F4FBFE}
+.day.off{opacity:.4;cursor:not-allowed}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.slot{border:1.5px solid var(--border);border-radius:var(--r-md);padding:12px 6px;text-align:center;cursor:pointer;transition:all var(--ease);background:var(--surface);font-size:13.5px;font-weight:700;min-height:48px}
+.slot span{display:block;font-size:10.5px;font-weight:600;color:#0E9F68}
+.slot:hover{border-color:#C9D2DC}
+.slot.sel{border-color:var(--primary-dark);background:#F4FBFE;color:var(--primary-dark)}
+.slot.full{opacity:.4;cursor:not-allowed}
+.slot.full span{color:var(--text-2)}
+
+/* Summary bar */
+.summary{position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--border);padding:14px 0;margin-top:26px}
+.summary .wrap{display:flex;align-items:center;gap:14px}
+.summary .t{font-size:12.5px;color:var(--text-2)}
+.summary .t b{display:block;font-size:14.5px;color:var(--text)}
+.summary .btn{margin-inline-start:auto}
+.strike{text-decoration:line-through;opacity:.6}
+.freetag{color:#0E9F68;font-weight:800}
+
+/* Success */
+.success{text-align:center;padding:36px 20px;display:none}
+.success.show{display:block}
+.success .big{width:76px;height:76px;border-radius:50%;background:#E8F9F1;display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+.success .big .icon{width:36px;height:36px;stroke:var(--success);stroke-width:2.5}
+.success h1{font-size:20px;font-weight:800;margin-bottom:6px}
+.success p{font-size:13.5px;color:var(--text-2);max-width:400px;margin:0 auto 24px}
+.hideable.hidden{display:none}
+
+@media(max-width:600px){.slots{grid-template-columns:repeat(3,1fr)}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="wrap">
+    <a href="app.html" class="logo"><span class="logo-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 17L9 7l4 6 3-4 5 8" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>رزرو کلاس اسکی</a>
+    <a href="app.html" class="close" aria-label="بستن و بازگشت به داشبورد"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="hideable" id="flow">
+    <div class="vipbar">
+      <svg class="icon" viewBox="0 0 24 24"><path d="m12 2 2.9 6.3 6.6.6-5 4.5 1.5 6.6L12 16.5 6 20l1.5-6.6-5-4.5 6.6-.6L12 2Z"/></svg>
+      <span><b>عضو VIP هستید</b> — اولین جلسهٔ کلاس برای شما رایگان است.</span>
+    </div>
+
+    <div class="card">
+      <h2>۱ · مربی خود را انتخاب کنید</h2>
+      <button class="coach sel" type="button" data-coach="مربی آرش">
+        <span class="av">آ</span>
+        <span><b>مربی آرش</b><span>اسکی آلپاین · ۱۲ سال سابقه · دیزین</span></span>
+        <span class="meta"><span class="star"><svg viewBox="0 0 24 24"><path d="m12 2 2.9 6.3 6.6.6-5 4.5 1.5 6.6L12 16.5 6 20l1.5-6.6-5-4.5 6.6-.6L12 2Z"/></svg>۴.۹</span><b>۱٬۲۰۰٬۰۰۰ ت</b><span style="font-size:11px">جلسهٔ خصوصی</span></span>
+      </button>
+      <button class="coach" type="button" data-coach="مربی نازنین">
+        <span class="av g">ن</span>
+        <span><b>مربی نازنین</b><span>مبتدی تا متوسط · ۸ سال سابقه · دربندسر</span></span>
+        <span class="meta"><span class="star"><svg viewBox="0 0 24 24"><path d="m12 2 2.9 6.3 6.6.6-5 4.5 1.5 6.6L12 16.5 6 20l1.5-6.6-5-4.5 6.6-.6L12 2Z"/></svg>۴.۸</span><b>۹۵۰٬۰۰۰ ت</b><span style="font-size:11px">جلسهٔ خصوصی</span></span>
+      </button>
+    </div>
+
+    <div class="card">
+      <h2>۲ · روز و ساعت را انتخاب کنید</h2>
+      <div class="days" role="listbox" aria-label="انتخاب روز">
+        <div class="day sel" role="option" aria-selected="true"><b>۱۸</b>پنجشنبه</div>
+        <div class="day" role="option"><b>۱۹</b>جمعه</div>
+        <div class="day" role="option"><b>۲۱</b>یکشنبه</div>
+        <div class="day off" aria-disabled="true"><b>۲۲</b>دوشنبه</div>
+        <div class="day" role="option"><b>۲۳</b>سه‌شنبه</div>
+        <div class="day" role="option"><b>۲۵</b>پنجشنبه</div>
+      </div>
+      <div class="slots" aria-label="سانس‌های خالی">
+        <button class="slot" type="button">۰۸:۰۰<span>خالی</span></button>
+        <button class="slot sel" type="button">۱۰:۰۰<span>خالی</span></button>
+        <button class="slot" type="button">۱۲:۰۰<span>خالی</span></button>
+        <button class="slot full" type="button" disabled>۱۴:۰۰<span>تکمیل</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success -->
+  <div class="card success" id="done">
+    <span class="big"><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+    <h1>رزرو شما تأیید شد</h1>
+    <p id="donetxt">کلاس اسکی با مربی آرش — پنجشنبه ۱۸ تیر، ساعت ۱۰:۰۰، پیست دیزین. ایمیل تأیید و یادآوری برایتان ارسال می‌شود.</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="app.html" class="btn btn-primary">بازگشت به داشبورد</a>
+      <a href="app-booking.html" class="btn btn-ghost">رزرو جلسهٔ دیگر</a>
+    </div>
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="summary hideable" id="sumbar">
+  <div class="wrap">
+    <span class="t" id="sumtxt"><b>مربی آرش · پنجشنبه ۱۸ تیر · ۱۰:۰۰</b>جلسهٔ خصوصی ۱ ساعته · <span class="strike">۱٬۲۰۰٬۰۰۰ ت</span> <span class="freetag">رایگان (VIP)</span></span>
+    <button class="btn btn-primary" id="confirm" type="button">تأیید رزرو</button>
+  </div>
+</div>
+
+<script>
+let coach='مربی آرش',day='پنجشنبه ۱۸ تیر',slot='۱۰:۰۰';
+const sum=document.getElementById('sumtxt');
+const upd=()=>{sum.querySelector('b').textContent=`${coach} · ${day} · ${slot}`;};
+document.querySelectorAll('.coach').forEach(c=>c.addEventListener('click',()=>{
+  document.querySelectorAll('.coach').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');
+  coach=c.dataset.coach;upd();
+}));
+document.querySelectorAll('.day:not(.off)').forEach(d=>d.addEventListener('click',()=>{
+  document.querySelectorAll('.day').forEach(x=>{x.classList.remove('sel');x.setAttribute('aria-selected','false')});
+  d.classList.add('sel');d.setAttribute('aria-selected','true');
+  day=d.childNodes[1].textContent+' '+d.querySelector('b').textContent+' تیر';upd();
+}));
+document.querySelectorAll('.slot:not(.full)').forEach(s=>s.addEventListener('click',()=>{
+  document.querySelectorAll('.slot').forEach(x=>x.classList.remove('sel'));s.classList.add('sel');
+  slot=s.childNodes[0].textContent.trim();upd();
+}));
+document.getElementById('confirm').addEventListener('click',()=>{
+  document.querySelectorAll('.hideable').forEach(h=>h.classList.add('hidden'));
+  document.getElementById('donetxt').textContent=`کلاس اسکی با ${coach} — ${day}، ساعت ${slot}. ایمیل تأیید و یادآوری برایتان ارسال می‌شود.`;
+  document.getElementById('done').classList.add('show');
+  scrollTo({top:0,behavior:'smooth'});
+});
+</script>
+</body>
+</html>
